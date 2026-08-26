@@ -2,8 +2,7 @@ import { contactLinks } from "@/data/contact";
 
 export function ContactLinks() {
   const availableLinks = contactLinks.filter(
-    (item): item is (typeof contactLinks)[number] & { href: string } =>
-      typeof item.href === "string",
+    (item) => item.value !== "待补充",
   );
 
   return (
@@ -13,7 +12,11 @@ export function ContactLinks() {
           <span>{String(index + 1).padStart(2, "0")}</span>
           <div>
             <p>{item.label}</p>
-            <a href={item.href}>{item.value}</a>
+            {item.href ? (
+              <a href={item.href}>{item.value}</a>
+            ) : (
+              <strong>{item.value}</strong>
+            )}
             <small>{item.description}</small>
           </div>
         </div>

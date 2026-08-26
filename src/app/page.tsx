@@ -172,7 +172,7 @@ export default function HomePage() {
             index="05"
             eyebrow="Contact"
             title="如果你正在做相近的事，欢迎交流。"
-            description="当前公开入口为 GitHub；未填写的联系方式不会显示。"
+            description="当前公开入口为 GitHub、手机号与微信；未填写的联系方式不会显示。"
           />
           <ContactLinks />
           <div className="section-action">

@@ -12,6 +12,18 @@ export const contactLinks = [
     description: "查看公开项目与代码记录。",
   },
   {
+    label: "手机号",
+    value: "18811563163",
+    href: "tel:18811563163",
+    description: "可直接拨打或添加为微信。",
+  },
+  {
+    label: "微信",
+    value: "PtPPPPPPPPPP",
+    href: null,
+    description: "添加时请备注来意，例如来自个人网站。",
+  },
+  {
     label: "社交平台",
     value: "待补充",
     href: null,
