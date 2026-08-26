@@ -49,7 +49,7 @@ export function absoluteUrl(path: string): string {
 }
 
 // SIGNAL HUNT（抽奖系统）入口。NEXT_PUBLIC_SIGNAL_HUNT_URL 配置站点根地址，
-// 这里统一拼接访客抽奖页 /display 与管理后台 /admin。开发环境允许指向本地开发服务器；
+// 这里统一拼接访客抽奖页 /display 与管理后台 /admin/dashboard。开发环境允许指向本地开发服务器；
 // 生产构建必须配置正式域名，否则入口隐藏，绝不回退到 localhost。
 const localSignalHuntHosts = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
 
@@ -98,5 +98,5 @@ export function getSignalHuntUrl(): string | null {
 export function getSignalHuntAdminUrl(): string | null {
   const origin = getSignalHuntOrigin();
   if (!origin) return null;
-  return new URL("/admin", origin).toString();
+  return new URL("/admin/dashboard", origin).toString();
 }
