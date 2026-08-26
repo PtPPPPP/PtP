@@ -2,8 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { EmptyState } from "@/components/empty-state";
+import { FilterControls } from "@/components/filter-controls";
 import { ProjectGrid } from "@/components/project-grid";
 import { projectCategories } from "@/data/projects";
+import { matchesKeywordQuery } from "@/lib/filter";
 import type { ProjectCategory, ProjectListItem } from "@/types/content";
 
 export function ProjectFilter({ projects }: { projects: ProjectListItem[] }) {
@@ -11,52 +13,36 @@ export function ProjectFilter({ projects }: { projects: ProjectListItem[] }) {
   const [category, setCategory] = useState<"全部" | ProjectCategory>("全部");
 
   const filteredProjects = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
     return projects.filter((project) => {
       const categoryMatches =
         category === "全部" || project.category === category;
-      const text = [
+      const fields = [
         project.title,
         project.description,
         project.category,
         ...project.tags,
         ...project.technologies,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return categoryMatches && text.includes(normalizedQuery);
+      ];
+      return categoryMatches && matchesKeywordQuery(fields, query);
     });
   }, [category, projects, query]);
 
   return (
     <div>
-      <div className="filter-panel">
-        <label className="search-field">
-          <span>搜索项目</span>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="名称、方向或技术"
-          />
-        </label>
-        <div className="category-filter" aria-label="按分类筛选项目">
-          {projectCategories.map((item) => (
-            <button
-              className={category === item ? "is-active" : ""}
-              type="button"
-              aria-pressed={category === item}
-              onClick={() => setCategory(item)}
-              key={item}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
+      <FilterControls
+        searchLabel="搜索项目"
+        placeholder="名称、方向或技术"
+        query={query}
+        onQueryChange={setQuery}
+        categoriesAriaLabel="按分类筛选项目"
+        categories={projectCategories}
+        category={category}
+        onCategoryChange={setCategory}
+      >
         <p className="filter-count" aria-live="polite">
           显示 {filteredProjects.length} / {projects.length} 个项目
         </p>
-      </div>
+      </FilterControls>
       {filteredProjects.length ? (
         <ProjectGrid projects={filteredProjects} />
       ) : (
