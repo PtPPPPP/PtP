@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#e4eaf1"/>
+  <g stroke="#b8c4d1"><path d="M0 90h960M0 270h960M0 450h960"/><path d="M120 0v540M300 0v540M480 0v540M660 0v540M840 0v540"/></g>
+  <path d="M210 380h145V230h225v100h165" fill="none" stroke="#2563eb" stroke-width="10" stroke-dasharray="16 12"/>
+  <rect x="175" y="345" width="70" height="70" fill="#101828"/>
+  <circle cx="745" cy="330" r="36" fill="#2563eb"/>
+  <text x="55" y="60" fill="#101828" font-family="Arial" font-size="17" font-weight="700">NOTE / EMBODIED</text>
+</svg>

@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+coverage/
+.visual-checks/
+.env
+.env.local
+.env.*.local
+*.log
+*.tsbuildinfo
+.DS_Store
+Thumbs.db
+next-env.d.ts
+.wrangler/
+graphify-out/

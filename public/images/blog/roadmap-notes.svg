@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#101828"/>
+  <path d="M0 90h960M0 450h960M120 0v540M840 0v540" stroke="#344054"/>
+  <path d="M200 380 330 220l130 90 145-155 155 105" fill="none" stroke="#f8fafc" stroke-width="8"/>
+  <circle cx="330" cy="220" r="18" fill="#2563eb"/><circle cx="460" cy="310" r="18" fill="#2563eb"/><circle cx="605" cy="155" r="18" fill="#2563eb"/>
+  <text x="55" y="60" fill="#f8fafc" font-family="Arial" font-size="17" font-weight="700">NOTE / ROADMAP</text>
+</svg>

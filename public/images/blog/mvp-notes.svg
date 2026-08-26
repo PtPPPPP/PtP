@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <rect width="960" height="540" fill="#edf1f6"/>
+  <path d="M0 90h960M0 450h960M120 0v540M840 0v540" stroke="#b8c4d1"/>
+  <circle cx="280" cy="270" r="55" fill="none" stroke="#101828" stroke-width="8"/>
+  <circle cx="480" cy="270" r="55" fill="#2563eb"/>
+  <circle cx="680" cy="270" r="55" fill="none" stroke="#101828" stroke-width="8"/>
+  <path d="M335 270h90M535 270h90" stroke="#101828" stroke-width="5"/>
+  <text x="55" y="60" fill="#101828" font-family="Arial" font-size="17" font-weight="700">NOTE / MVP</text>
+</svg>

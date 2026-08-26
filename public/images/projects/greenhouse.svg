@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#edf1f6"/>
+  <path d="M0 95h1200M0 375h1200M0 655h1200M150 0v750M600 0v750M1050 0v750" stroke="#b8c4d1"/>
+  <path d="M190 560 420 250l210 310M570 560l210-310 230 310M250 560h700" fill="none" stroke="#101828" stroke-width="8"/>
+  <path d="M505 470c-72-48-119-21-119-21s11 75 119 68M505 470c75-91 135-62 135-62s-10 85-135 109v-47Z" fill="#2563eb"/>
+  <circle cx="965" cy="135" r="40" fill="none" stroke="#101828" stroke-width="8"/>
+  <path d="M965 75v-25M965 220v-25M905 135h-25M1050 135h-25" stroke="#101828" stroke-width="8"/>
+  <text x="120" y="94" fill="#101828" font-family="Arial" font-size="22" font-weight="700">AIoT / 01</text>
+  <text x="75" y="690" fill="#475467" font-family="Arial" font-size="17">SYSTEM STUDY · IMAGE PLACEHOLDER</text>
+</svg>

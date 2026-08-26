@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#101828"/>
+  <path d="M0 120h1200M0 375h1200M0 630h1200M210 0v750M600 0v750M990 0v750" stroke="#344054"/>
+  <circle cx="600" cy="375" r="190" fill="none" stroke="#f8fafc" stroke-width="3"/>
+  <circle cx="600" cy="375" r="124" fill="none" stroke="#2563eb" stroke-width="34" stroke-dasharray="240 540" transform="rotate(-58 600 375)"/>
+  <path d="M600 215v320M440 375h320" stroke="#f8fafc" stroke-width="3"/>
+  <rect x="564" y="339" width="72" height="72" fill="#2563eb"/>
+  <text x="120" y="94" fill="#f8fafc" font-family="Arial" font-size="22" font-weight="700">SIGNAL-HUNT / 03</text>
+  <text x="75" y="690" fill="#98a2b3" font-family="Arial" font-size="17">MULTI-WINDOW CONTROL · IMAGE PLACEHOLDER</text>
+</svg>

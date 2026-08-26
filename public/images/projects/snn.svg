@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#e4eaf1"/>
+  <path d="M0 0h1200v750H0zM120 0v750M1080 0v750M0 110h1200M0 640h1200" fill="none" stroke="#b8c4d1"/>
+  <path d="M325 475 470 230l130 245 130-245 145 245" fill="none" stroke="#101828" stroke-width="16"/>
+  <path d="M395 475h410" stroke="#2563eb" stroke-width="16"/>
+  <circle cx="600" cy="475" r="33" fill="#2563eb"/>
+  <text x="120" y="78" fill="#101828" font-family="Arial" font-size="22" font-weight="700">SNN COMMUNITY / 05</text>
+  <text x="75" y="690" fill="#475467" font-family="Arial" font-size="17">BRAND SYSTEM · IMAGE PLACEHOLDER</text>
+</svg>

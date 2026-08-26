@@ -1,0 +1,47 @@
+{
+  "name": "huang-bolin-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "postbuild": "node scripts/prepare-standalone.mjs",
+    "start": "node .next/standalone/server.js",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "visual:check": "node scripts/visual-smoke.mjs",
+    "deploy": "next build && wrangler deploy",
+    "deploy:preview": "wrangler dev"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "next": "16.2.12",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "rehype-highlight": "7.0.2",
+    "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^22.15.0",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.12",
+    "jsdom": "^26.1.0",
+    "playwright-core": "^1.54.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.0",
+    "wrangler": "^4.126.0"
+  },
+  "overrides": {
+    "postcss": "8.5.25",
+    "sharp": "0.35.3"
+  }
+}

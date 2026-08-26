@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750">
+  <rect width="1200" height="750" fill="#e4eaf1"/>
+  <path d="M0 0h1200v750H0z" fill="none" stroke="#b8c4d1"/>
+  <g stroke="#b8c4d1"><path d="M120 0v750M300 0v750M480 0v750M660 0v750M840 0v750M1020 0v750"/><path d="M0 105h1200M0 285h1200M0 465h1200M0 645h1200"/></g>
+  <path d="M215 555V370h170v185M250 370l50-80 50 80M300 290v-75M275 215h50" fill="none" stroke="#101828" stroke-width="10"/>
+  <circle cx="255" cy="580" r="28" fill="#101828"/><circle cx="345" cy="580" r="28" fill="#101828"/>
+  <path d="M385 465h210V285h220v180h175" fill="none" stroke="#2563eb" stroke-width="10" stroke-dasharray="18 14"/>
+  <circle cx="990" cy="465" r="36" fill="#2563eb"/>
+  <text x="120" y="94" fill="#101828" font-family="Arial" font-size="22" font-weight="700">EMBODIED / 02</text>
+  <text x="75" y="690" fill="#475467" font-family="Arial" font-size="17">2D TRAINING MAP · IMAGE PLACEHOLDER</text>
+</svg>
