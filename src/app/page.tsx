@@ -16,6 +16,7 @@ import {
 } from "@/data/projects";
 import { getAllBlogPosts, toBlogListItem } from "@/lib/content";
 import { createPageMetadata } from "@/lib/metadata";
+import { getSignalHuntUrl } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
   description: profile.introduction,
@@ -26,6 +27,7 @@ export default function HomePage() {
   const featuredProjects = getFeaturedProjects().map(toProjectListItem);
   const latestPosts = getAllBlogPosts().slice(0, 3).map(toBlogListItem);
   const publicExperiences = getPublicExperiences();
+  const signalHuntUrl = getSignalHuntUrl();
 
   return (
     <>
@@ -55,6 +57,16 @@ export default function HomePage() {
                 <Link className="text-link" href="/blog">
                   阅读技术文章
                 </Link>
+                {signalHuntUrl ? (
+                  <a
+                    className="text-link"
+                    href={signalHuntUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    体验 SIGNAL HUNT <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
               </div>
             </div>
             <aside className="hero__facts" aria-label="个人档案摘要">

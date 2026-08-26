@@ -47,3 +47,45 @@ export function getSiteUrl(): URL {
 export function absoluteUrl(path: string): string {
   return new URL(path, getSiteUrl()).toString();
 }
+
+// SIGNAL HUNT（抽奖系统）入口。NEXT_PUBLIC_SIGNAL_HUNT_URL 配置站点根地址，
+// 这里统一拼接访客抽奖页 /display。开发环境允许指向本地开发服务器；
+// 生产构建必须配置正式域名，否则入口隐藏，绝不回退到 localhost。
+const signalHuntDisplayPath = "/display";
+const localSignalHuntHosts = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
+
+let hasWarnedAboutSignalHuntUrl = false;
+
+export function getSignalHuntUrl(): string | null {
+  const configuredUrl = process.env.NEXT_PUBLIC_SIGNAL_HUNT_URL?.trim();
+
+  if (!configuredUrl) {
+    if (process.env.NODE_ENV === "production" && !hasWarnedAboutSignalHuntUrl) {
+      hasWarnedAboutSignalHuntUrl = true;
+      console.warn(
+        "[site] 生产构建未配置 NEXT_PUBLIC_SIGNAL_HUNT_URL，SIGNAL HUNT 入口将隐藏；部署前必须配置正式域名。",
+      );
+    }
+    return null;
+  }
+
+  let baseUrl: URL;
+  try {
+    baseUrl = new URL(configuredUrl);
+  } catch {
+    throw new Error(
+      `NEXT_PUBLIC_SIGNAL_HUNT_URL 必须是完整 URL，当前值为：${configuredUrl}`,
+    );
+  }
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    localSignalHuntHosts.has(baseUrl.hostname)
+  ) {
+    throw new Error(
+      `NEXT_PUBLIC_SIGNAL_HUNT_URL 在生产构建中不能使用本机地址：${baseUrl.origin}，请配置正式域名。`,
+    );
+  }
+
+  return new URL(signalHuntDisplayPath, baseUrl.origin).toString();
+}

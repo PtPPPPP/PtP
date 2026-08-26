@@ -3,6 +3,7 @@ import type {
   ProjectCategory,
   ProjectListItem,
 } from "@/types/content";
+import { getSignalHuntUrl } from "@/lib/site";
 
 export const projectCategories: Array<"全部" | ProjectCategory> = [
   "全部",
@@ -153,7 +154,7 @@ export const projects: Project[] = [
     cover: "/images/projects/signal.svg",
     gallery: ["/images/projects/signal.svg"],
     github: "https://github.com/PtPPPPP/SIGNAL-HUNT",
-    demo: null,
+    demo: getSignalHuntUrl(),
     background:
       "线下活动系统需要同时服务现场操作、后台管理和公众观看，不同窗口共享同一活动状态，但信息密度和交互重点完全不同。",
     problem:
@@ -192,7 +193,10 @@ export const projects: Project[] = [
       },
     ],
     nextSteps: ["补充真实界面截图", "补充项目时间与个人工作边界"],
-    limitations: ["项目公开链接与运行环境信息待补充"],
+    limitations: [
+      "在线体验版：抽奖数据保存在访问者浏览器本地，不同设备数据不互通",
+      "跨设备同步与云端活动管理需要后续服务端支持",
+    ],
   },
   {
     slug: "finding-job",
