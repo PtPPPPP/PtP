@@ -11,7 +11,6 @@ category: "项目复盘"
 draft: false
 sample: true
 published: false
-cover: "/images/blog/aiot-notes.svg"
 ---
 
 > 这是一篇用于展示博客结构与排版能力的示例草稿，不代表已经正式发布的项目复盘。

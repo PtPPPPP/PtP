@@ -11,7 +11,6 @@ category: "学习笔记"
 draft: false
 sample: true
 published: false
-cover: "/images/blog/roadmap-notes.svg"
 ---
 
 > 这是一篇示例路线草稿，不代表已经验证完成的个人学习方案。

@@ -23,7 +23,6 @@ function validateFrontmatter(
     "date",
     "updated",
     "category",
-    "cover",
   ] as const;
 
   for (const key of requiredStrings) {
@@ -54,7 +53,10 @@ function validateFrontmatter(
     draft: value.draft,
     sample: value.sample,
     published: value.published,
-    cover: value.cover as string,
+    cover:
+      typeof value.cover === "string" && value.cover.trim() !== ""
+        ? value.cover
+        : undefined,
   };
 }
 

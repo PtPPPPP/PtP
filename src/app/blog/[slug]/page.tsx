@@ -100,16 +100,6 @@ export default async function BlogPostPage({
             ))}
           </div>
         </header>
-        <figure className="article-cover">
-          <Image
-            src={post.cover}
-            alt={`${post.title} 的抽象封面插图`}
-            width={1440}
-            height={810}
-            priority
-            sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1440px) calc(100vw - 4rem), 1280px"
-          />
-        </figure>
         <div className="article-layout">
           <aside>
             <TableOfContents headings={post.headings} />

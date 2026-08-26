@@ -31,7 +31,7 @@ const routes = [
   "/projects/aiot-greenhouse",
   "/experience",
   "/blog",
-  "/blog/designing-aiot-greenhouse",
+  "/blog/from-idea-to-mvp",
   "/about",
   "/contact",
   "/robots.txt",
@@ -43,7 +43,7 @@ const visualRoutes = [
   { name: "project-detail", route: "/projects/aiot-greenhouse" },
   { name: "experience", route: "/experience" },
   { name: "blog", route: "/blog" },
-  { name: "blog-detail", route: "/blog/designing-aiot-greenhouse" },
+  { name: "blog-detail", route: "/blog/from-idea-to-mvp" },
   { name: "about", route: "/about" },
   { name: "contact", route: "/contact" },
 ];

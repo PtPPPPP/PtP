@@ -24,7 +24,6 @@ export function validateProjectData(): string[] {
       project.category,
       project.status,
       project.year,
-      project.cover,
       project.background,
       project.problem,
     ];

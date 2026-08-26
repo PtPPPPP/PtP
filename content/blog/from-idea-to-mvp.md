@@ -11,7 +11,6 @@ category: "方法记录"
 draft: false
 sample: false
 published: true
-cover: "/images/blog/mvp-notes.svg"
 ---
 
 > 这是一篇示例方法文章，不对应某个已经正式发布的项目总结。

@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
-  <rect width="960" height="540" fill="#edf1f6"/>
-  <path d="M0 90h960M0 450h960M120 0v540M840 0v540" stroke="#b8c4d1"/>
-  <path d="M280 385 480 155l200 230M340 385h280" fill="none" stroke="#101828" stroke-width="8"/>
-  <circle cx="480" cy="295" r="45" fill="#2563eb"/>
-  <text x="55" y="60" fill="#101828" font-family="Arial" font-size="17" font-weight="700">NOTE / AIoT</text>
-</svg>

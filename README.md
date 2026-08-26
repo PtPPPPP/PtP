@@ -48,7 +48,7 @@ src/test/                  单元测试与关键页面渲染测试
 
 1. 在 `src/data/projects.ts` 的 `projects` 数组中新增一个完整对象。
 2. `slug` 使用唯一的小写英文和连字符，例如 `robot-vision-demo`。
-3. 把封面和截图放进 `public/images/projects/`，并更新 `cover` 与 `gallery`。
+3. `cover` 与 `gallery` 是可选字段：有真实封面或截图时放入 `public/images/projects/` 并填写路径；没有时留空，页面会自动切换为无图片的档案式布局，不要使用占位图。
 4. 没有 GitHub 或在线演示时，把字段保持为 `null`，页面不会生成假链接。
 5. 运行 `npm run test`，数据完整性测试会检查 slug 和必填字段。
 
@@ -70,9 +70,10 @@ category: "文章分类"
 draft: false
 sample: false
 published: true
-cover: "/images/blog/cover.svg"
 ---
 ```
+
+`cover` 是可选字段；省略时文章列表与详情页不显示封面图。
 
 正文支持标题、列表、引用、代码块、表格和图片。二级、三级标题会自动进入目录。开发环境可以预览样例内容；生产环境只公开同时满足 `draft: false`、`sample: false`、`published: true` 的文章。
 

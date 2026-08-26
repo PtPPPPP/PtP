@@ -102,18 +102,6 @@ export default async function ProjectDetailPage({
           </div> : null}
         </header>
 
-        <figure className="case-study__cover">
-          <Image
-            src={project.cover}
-            alt={`${project.title} 项目封面占位图，非真实项目截图`}
-            width={1440}
-            height={900}
-            priority
-            sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1440px) calc(100vw - 4rem), 1280px"
-          />
-          <figcaption>项目图片占位 · 建议尺寸 1600 × 1000 px</figcaption>
-        </figure>
-
         <div className="case-study__body">
           <aside className="case-study__rail">
             <div>
@@ -182,8 +170,8 @@ export default async function ProjectDetailPage({
                 {project.highlights.map((item) => <li key={item}>{item}</li>)}
               </ul>
             </CaseSection>
-            <CaseSection index="08" title="项目证据">
-              {project.evidenceReady && project.gallery.length ? (
+            {project.evidenceReady && project.gallery?.length ? (
+              <CaseSection index="08" title="项目证据">
                 <div className="case-gallery">
                   {project.gallery.map((image, index) => (
                     <figure key={image}>
@@ -198,10 +186,8 @@ export default async function ProjectDetailPage({
                     </figure>
                   ))}
                 </div>
-              ) : (
-                <p className="evidence-pending">项目截图待补充；当前封面为抽象占位图，不作为项目运行证据。</p>
-              )}
-            </CaseSection>
+              </CaseSection>
+            ) : null}
             <CaseSection index="09" title="当前限制">
               <ul>
                 {project.limitations.map((item) => (

@@ -36,8 +36,6 @@ export const projects: Project[] = [
     featured: true,
     evidenceReady: false,
     year: "时间待补充",
-    cover: "/images/projects/greenhouse.svg",
-    gallery: ["/images/projects/greenhouse.svg"],
     github: "https://github.com/PtPPPPP/AIoT-",
     demo: null,
     background:
@@ -95,8 +93,6 @@ export const projects: Project[] = [
     featured: true,
     evidenceReady: false,
     year: "时间待补充",
-    cover: "/images/projects/embodied.svg",
-    gallery: ["/images/projects/embodied.svg"],
     github: "https://github.com/PtPPPPP/embodied-training-platform",
     demo: null,
     background:
@@ -151,8 +147,6 @@ export const projects: Project[] = [
     featured: true,
     evidenceReady: false,
     year: "时间待补充",
-    cover: "/images/projects/signal.svg",
-    gallery: ["/images/projects/signal.svg"],
     github: "https://github.com/PtPPPPP/SIGNAL-HUNT",
     demo: getSignalHuntUrl(),
     background:
@@ -211,8 +205,6 @@ export const projects: Project[] = [
     featured: false,
     evidenceReady: false,
     year: "时间待补充",
-    cover: "/images/projects/finding-job.svg",
-    gallery: ["/images/projects/finding-job.svg"],
     github: "https://github.com/PtPPPPP/f1ti",
     demo: null,
     background:
@@ -251,8 +243,6 @@ export const projects: Project[] = [
     featured: false,
     evidenceReady: false,
     year: "时间待补充",
-    cover: "/images/projects/snn.svg",
-    gallery: ["/images/projects/snn.svg"],
     github: "https://github.com/PtPPPPP/snn",
     demo: null,
     background:
@@ -297,7 +287,7 @@ export function toProjectListItem(project: Project): ProjectListItem {
     tags: project.tags,
     technologies: project.technologies,
     status: project.status,
-    cover: project.cover,
+    year: project.year,
     demo: project.demo,
   };
 }

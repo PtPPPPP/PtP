@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { BlogListItem } from "@/types/content";
 
@@ -38,19 +37,6 @@ export function BlogCard({
           </Link>
         </div>
       </div>
-      <Link
-        className="blog-card__image"
-        href={`/blog/${post.slug}`}
-        aria-label={`阅读文章：${post.title}`}
-      >
-        <Image
-          src={post.cover}
-          alt={`${post.title} 的抽象封面插图`}
-          width={960}
-          height={540}
-          sizes="(max-width: 768px) calc(100vw - 2rem), (max-width: 1200px) 28vw, 320px"
-        />
-      </Link>
     </article>
   );
 }

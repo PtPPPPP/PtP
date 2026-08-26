@@ -26,10 +26,10 @@ export interface Project {
   featured: boolean;
   evidenceReady: boolean;
   year: string;
-  cover: string;
-  gallery: string[];
   github: string | null;
   demo: string | null;
+  cover?: string;
+  gallery?: string[];
   background: string;
   problem: string;
   features: string[];
@@ -50,7 +50,7 @@ export type ProjectListItem = Pick<
   | "tags"
   | "technologies"
   | "status"
-  | "cover"
+  | "year"
   | "demo"
 >;
 
@@ -64,7 +64,7 @@ export interface BlogFrontmatter {
   draft: boolean;
   sample: boolean;
   published: boolean;
-  cover: string;
+  cover?: string;
 }
 
 export type BlogListItem = Pick<

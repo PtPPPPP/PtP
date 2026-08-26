@@ -11,7 +11,6 @@ category: "学习笔记"
 draft: false
 sample: true
 published: false
-cover: "/images/blog/embodied-notes.svg"
 ---
 
 > 这是一篇示例学习笔记，内容用于验证 Markdown 阅读体验，后续需要结合真实学习记录补充。
