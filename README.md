@@ -14,28 +14,22 @@ npm run dev
 
 浏览器访问 `http://localhost:3000`。
 
-生产检查与运行：
+生产检查与构建：
 
 ```bash
 npm run typecheck
 npm run lint
 npm run test
 npm run build
-npm run start
 ```
 
-构建完成后，`postbuild` 会把 `public` 与静态资源复制到 standalone 目录；`npm run start` 再启动 `.next/standalone/server.js`。需要修改端口时先设置 `PORT` 环境变量；Windows PowerShell 示例：
-
-```powershell
-$env:PORT=3010
-npm run start
-```
+项目使用静态导出（`output: "export"`），`npm run build` 生成 `out/` 目录，直接部署静态资源即可，不需要启动 Node 服务。`postbuild` 会检查是否存在 standalone 产物，静态导出模式下自动跳过。
 
 ## 内容结构
 
 ```text
 content/blog/              Markdown 文章
-public/images/             本地图片和当前占位图
+public/                    favicon 等静态资源（新增项目图片时创建 images/projects/）
 src/app/                   页面、SEO 路由与全局样式
 src/components/            可复用界面组件
 src/data/                  个人、项目、经历、技能、导航与联系数据
@@ -89,7 +83,7 @@ published: true
 
 ## 环境变量与部署
 
-复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_SITE_URL` 改成最终域名。它用于 canonical URL、sitemap 和结构化数据。
+复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_SITE_URL` 改成最终域名。它用于 canonical URL、sitemap 和结构化数据。`NEXT_PUBLIC_SIGNAL_HUNT_URL` 可选，配置后首页与项目详情页会出现 SIGNAL HUNT 入口；生产构建未配置正式域名时入口自动隐藏。
 
 项目使用 `output: "export"` 静态导出，部署在 Cloudflare Workers（静态资源托管）。部署命令：
 
