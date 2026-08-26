@@ -80,12 +80,22 @@ export default async function ProjectDetailPage({
           <p>{project.subtitle}</p>
           {project.github || project.demo ? <div className="case-study__links">
             {project.github ? (
-              <a className="button button--secondary" href={project.github}>
-                GitHub <span aria-hidden="true">↗</span>
+              <a
+                className="button button--secondary"
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                查看源码 <span aria-hidden="true">↗</span>
               </a>
             ) : null}
             {project.demo ? (
-              <a className="button button--primary" href={project.demo}>
+              <a
+                className="button button--primary"
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 在线演示 <span aria-hidden="true">↗</span>
               </a>
             ) : null}

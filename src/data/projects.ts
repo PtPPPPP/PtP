@@ -298,5 +298,6 @@ export function toProjectListItem(project: Project): ProjectListItem {
     technologies: project.technologies,
     status: project.status,
     cover: project.cover,
+    demo: project.demo,
   };
 }

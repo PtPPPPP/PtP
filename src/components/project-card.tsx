@@ -34,9 +34,21 @@ export function ProjectCard({
             <TechTag key={technology}>{technology}</TechTag>
           ))}
         </div>
-        <Link className="text-link" href={`/projects/${project.slug}`}>
-          查看项目档案 <span aria-hidden="true">→</span>
-        </Link>
+        <div className="project-card__actions">
+          <Link className="text-link" href={`/projects/${project.slug}`}>
+            查看项目档案 <span aria-hidden="true">→</span>
+          </Link>
+          {project.demo ? (
+            <a
+              className="text-link"
+              href={project.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              在线体验 <span aria-hidden="true">↗</span>
+            </a>
+          ) : null}
+        </div>
       </div>
       <Link
         className="project-card__media"

@@ -623,8 +623,16 @@ h3 {
   line-height: 1.3;
 }
 
-.project-card .text-link {
+.project-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  align-items: center;
   margin-top: 1.35rem;
+}
+
+.project-card__actions .text-link {
+  margin-top: 0;
 }
 
 .skill-matrix {

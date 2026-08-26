@@ -51,6 +51,7 @@ export type ProjectListItem = Pick<
   | "technologies"
   | "status"
   | "cover"
+  | "demo"
 >;
 
 export interface BlogFrontmatter {
