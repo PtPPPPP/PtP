@@ -284,14 +284,6 @@ h3 {
   max-width: 760px;
 }
 
-.hero__kicker {
-  margin-bottom: 1.25rem;
-  color: var(--color-accent);
-  font-size: var(--text-meta);
-  font-weight: 650;
-  letter-spacing: 0.08em;
-}
-
 .hero h1 {
   margin-bottom: 1.75rem;
   font-size: var(--text-display);

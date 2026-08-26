@@ -39,7 +39,6 @@ export default function HomePage() {
           </div>
           <div className="hero__grid">
             <div className="hero__identity">
-              <p className="hero__kicker">自动化 · 智能系统 · 产品工程</p>
               <h1>
                 <span>{profile.name}</span>
                 <small>{profile.englishName}</small>
