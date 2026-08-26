@@ -90,4 +90,11 @@ cover: "/images/blog/cover.svg"
 
 复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_SITE_URL` 改成最终域名。它用于 canonical URL、sitemap 和结构化数据。
 
-项目使用 `output: "standalone"`，可以部署到支持 Next.js/Node.js 的平台。部署前必须把 `NEXT_PUBLIC_SITE_URL` 设置为正式域名并运行 `npm run build`；缺少正式域名时构建会输出明确警告，且不会把 localhost 写入公开 SEO URL。
+项目使用 `output: "export"` 静态导出，部署在 Cloudflare Workers（静态资源托管）。部署命令：
+
+```bash
+npm run deploy        # next build + wrangler deploy
+npm run deploy:preview  # 本地用 wrangler 预览生产构建
+```
+
+域名与路由配置在 `wrangler.jsonc`（当前绑定 `berl1n.xyz` 与 `www.berl1n.xyz`）。首次使用需要 `npx wrangler login` 登录 Cloudflare 账号。

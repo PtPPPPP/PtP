@@ -6,5 +6,9 @@
     "directory": "./out",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  "routes": [
+    { "pattern": "berl1n.xyz", "custom_domain": true },
+    { "pattern": "www.berl1n.xyz", "custom_domain": true }
+  ]
 }
