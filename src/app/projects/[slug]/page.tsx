@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({
           </div>
           <h1>{project.title}</h1>
           <p>{project.subtitle}</p>
-          {project.github || project.demo ? <div className="case-study__links">
+          {project.github || project.demo || project.admin ? <div className="case-study__links">
             {project.github ? (
               <a
                 className="button button--secondary"
@@ -87,6 +87,16 @@ export default async function ProjectDetailPage({
                 rel="noopener noreferrer"
               >
                 查看源码 <span aria-hidden="true">↗</span>
+              </a>
+            ) : null}
+            {project.admin ? (
+              <a
+                className="button button--secondary"
+                href={project.admin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                管理后台 <span aria-hidden="true">↗</span>
               </a>
             ) : null}
             {project.demo ? (

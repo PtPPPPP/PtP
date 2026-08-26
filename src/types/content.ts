@@ -28,6 +28,7 @@ export interface Project {
   year: string;
   github: string | null;
   demo: string | null;
+  admin?: string | null;
   cover?: string;
   gallery?: string[];
   background: string;

@@ -3,7 +3,7 @@ import type {
   ProjectCategory,
   ProjectListItem,
 } from "@/types/content";
-import { getSignalHuntUrl } from "@/lib/site";
+import { getSignalHuntAdminUrl, getSignalHuntUrl } from "@/lib/site";
 
 export const projectCategories: Array<"全部" | ProjectCategory> = [
   "全部",
@@ -149,6 +149,7 @@ export const projects: Project[] = [
     year: "时间待补充",
     github: "https://github.com/PtPPPPP/SIGNAL-HUNT",
     demo: getSignalHuntUrl(),
+    admin: getSignalHuntAdminUrl(),
     background:
       "线下活动系统需要同时服务现场操作、后台管理和公众观看，不同窗口共享同一活动状态，但信息密度和交互重点完全不同。",
     problem:
