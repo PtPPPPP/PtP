@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ContactForm } from "@/components/contact-form";
 import { ContactLinks } from "@/components/contact-links";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
@@ -24,10 +23,6 @@ export default function ContactPage() {
         <div>
           <h2>公开联系方式</h2>
           <ContactLinks />
-        </div>
-        <div>
-          <h2>其他联系方式</h2>
-          <ContactForm />
         </div>
       </div>
     </Container>
