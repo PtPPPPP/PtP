@@ -3,7 +3,11 @@ import type {
   ProjectCategory,
   ProjectListItem,
 } from "@/types/content";
-import { getSignalHuntAdminUrl, getSignalHuntUrl } from "@/lib/site";
+import {
+  getSignalHuntAdminUrl,
+  getSignalHuntUrl,
+  getStdmUrl,
+} from "@/lib/site";
 
 export const projectCategories: Array<"全部" | ProjectCategory> = [
   "全部",
@@ -191,6 +195,64 @@ export const projects: Project[] = [
     limitations: [
       "在线体验版：抽奖数据保存在访问者浏览器本地，不同设备数据不互通",
       "跨设备同步与云端活动管理需要后续服务端支持",
+    ],
+  },
+  {
+    slug: "stdm",
+    title: "Diamond Track Atlas",
+    subtitle: "钻石联赛田径数据的可溯源交互图鉴",
+    description:
+      "聚合运动员档案、项目科普与比赛记录的田径图鉴网站，每条成绩都附带原始来源链接与人工核验状态。",
+    category: "Web 与产品开发",
+    tags: ["数据可视化", "信息导航", "前端产品"],
+    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS"],
+    status: "mvp",
+    featured: true,
+    evidenceReady: false,
+    year: "时间待补充",
+    github: "https://github.com/PtPPPPP/stdm",
+    demo: getStdmUrl(),
+    background:
+      "田径爱好者常常需要在多个来源之间反复核对成绩与纪录。这个项目把运动员档案、项目科普和最近比赛记录聚合到一个可追溯的界面中，强调数据从哪来、可信度如何。",
+    problem:
+      "如何让比赛成绩、PB/SB 标记和数据来源在同一页面内清晰可查，并在自动同步失败时保留可人工核验的数据管道。",
+    features: [
+      "运动员档案与照片回退占位图",
+      "项目科普分类介绍",
+      "比赛记录来源链接与核验状态",
+      "PB / SB 标记展示",
+      "自研 SVG 雷达图",
+      "运动员多维度对比面板",
+      "响应式设计",
+      "可选 Express REST API 后端",
+    ],
+    architecture: [
+      "前端只从统一数据层读取已生成的数据文件",
+      "最近比赛与 PB / SB 由纯函数从比赛记录计算得出",
+      "Node 脚本与 GitHub Actions 负责公开数据同步与校验",
+      "可选 Express 后端把数据以 REST 接口暴露给第三方",
+    ],
+    responsibilities: [
+      "信息架构与页面编排",
+      "前端界面与自研图表实现",
+      "数据同步、校验与核验流程设计",
+      "CI 自动更新 PR 工作流",
+    ],
+    highlights: [
+      "每条记录都带原始来源与核验状态，数据可追溯",
+      "自动同步失败时不猜测、不覆盖旧数据，只生成审计报告",
+    ],
+    challenges: [
+      {
+        problem: "官方页面结构变化或 JS 渲染会让自动解析失败。",
+        solution:
+          "同步失败时保留旧数据并输出审计报告，另提供手动导入流程作为兜底。",
+      },
+    ],
+    nextSteps: ["补充项目截图", "完善数据核验覆盖", "评估部署可选 REST 后端"],
+    limitations: [
+      "非官方数据源，成绩仅用于科普与学习参考",
+      "当前静态部署不包含可选的 Express 后端 API",
     ],
   },
   {

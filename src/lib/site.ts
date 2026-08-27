@@ -100,3 +100,41 @@ export function getSignalHuntAdminUrl(): string | null {
   if (!origin) return null;
   return new URL("/admin/dashboard", origin).toString();
 }
+
+// Diamond Track Atlas（钻石田径图鉴）入口。NEXT_PUBLIC_STDM_URL 配置站点根地址。
+// 与 SIGNAL HUNT 相同：开发环境允许本机地址，生产构建必须配置正式域名，否则入口隐藏。
+let hasWarnedAboutStdmUrl = false;
+
+export function getStdmUrl(): string | null {
+  const configuredUrl = process.env.NEXT_PUBLIC_STDM_URL?.trim();
+
+  if (!configuredUrl) {
+    if (process.env.NODE_ENV === "production" && !hasWarnedAboutStdmUrl) {
+      hasWarnedAboutStdmUrl = true;
+      console.warn(
+        "[site] 生产构建未配置 NEXT_PUBLIC_STDM_URL，Diamond Track Atlas 入口将隐藏；部署前必须配置正式域名。",
+      );
+    }
+    return null;
+  }
+
+  let baseUrl: URL;
+  try {
+    baseUrl = new URL(configuredUrl);
+  } catch {
+    throw new Error(
+      `NEXT_PUBLIC_STDM_URL 必须是完整 URL，当前值为：${configuredUrl}`,
+    );
+  }
+
+  if (
+    process.env.NODE_ENV === "production" &&
+    localSignalHuntHosts.has(baseUrl.hostname)
+  ) {
+    throw new Error(
+      `NEXT_PUBLIC_STDM_URL 在生产构建中不能使用本机地址：${baseUrl.origin}，请配置正式域名。`,
+    );
+  }
+
+  return baseUrl.origin;
+}
