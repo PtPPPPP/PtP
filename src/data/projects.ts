@@ -263,13 +263,13 @@ export const projects: Project[] = [
       "服务求职信息整理与产品验证的静态导航网站，提供公司岗位、筛选排序、技能矩阵和分享入口。",
     category: "Web 与产品开发",
     tags: ["求职工具", "信息导航", "前端产品"],
-    technologies: ["技术栈待补充"],
+    technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "Vitest"],
     status: "mvp",
     featured: false,
     evidenceReady: false,
     year: "时间待补充",
     github: "https://github.com/PtPPPPP/f1ti",
-    demo: null,
+    demo: "/finding-jobs/",
     background:
       "求职信息往往散落在不同来源，缺少统一字段会增加查找、比较和回顾成本。项目先用静态产品验证信息结构是否有效。",
     problem:
@@ -290,8 +290,11 @@ export const projects: Project[] = [
         solution: "待补充。",
       },
     ],
-    nextSteps: ["补充技术栈", "补充项目截图", "补充数据来源与维护方式"],
-    limitations: ["当前主要用于信息整理和产品验证"],
+    nextSteps: ["补充项目截图", "补充数据来源与维护方式"],
+    limitations: [
+      "当前主要用于信息整理和产品验证",
+      "在线体验版部署在本站 /finding-jobs/ 子路径，开发环境需先运行 npm run build 生成",
+    ],
   },
   {
     slug: "snn-community-website",

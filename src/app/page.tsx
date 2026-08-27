@@ -4,6 +4,7 @@ import { BlogList } from "@/components/blog-list";
 import { ContactLinks } from "@/components/contact-links";
 import { Container } from "@/components/container";
 import { ExperienceTimeline } from "@/components/experience-timeline";
+import { ImmersiveHero } from "@/components/immersive-hero";
 import { ProjectGrid } from "@/components/project-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { SkillMatrix } from "@/components/skill-matrix";
@@ -16,7 +17,6 @@ import {
 } from "@/data/projects";
 import { getAllBlogPosts, toBlogListItem } from "@/lib/content";
 import { createPageMetadata } from "@/lib/metadata";
-import { getSignalHuntUrl } from "@/lib/site";
 
 export const metadata: Metadata = createPageMetadata({
   description: profile.introduction,
@@ -27,75 +27,10 @@ export default function HomePage() {
   const featuredProjects = getFeaturedProjects().map(toProjectListItem);
   const latestPosts = getAllBlogPosts().slice(0, 3).map(toBlogListItem);
   const publicExperiences = getPublicExperiences();
-  const signalHuntUrl = getSignalHuntUrl();
 
   return (
     <>
-      <section className="hero">
-        <Container>
-          <div className="hero__eyebrow">
-            <span>个人技术档案 · Personal Technical Archive</span>
-            <span>Profile / 001</span>
-          </div>
-          <div className="hero__grid">
-            <div className="hero__identity">
-              <h1>
-                <span>{profile.name}</span>
-                <small>{profile.englishName}</small>
-              </h1>
-              <p className="hero__positioning">
-                {profile.role}，关注人工智能、计算机视觉、具身智能、机器人控制与工业自动化。
-              </p>
-              <div className="hero__actions">
-                <Link className="button button--primary" href="/projects">
-                  查看我的作品 <span aria-hidden="true">→</span>
-                </Link>
-                <Link className="button button--secondary" href="/experience">
-                  了解我的经历
-                </Link>
-                <Link className="text-link" href="/blog">
-                  阅读技术文章
-                </Link>
-                {signalHuntUrl ? (
-                  <a
-                    className="text-link"
-                    href={signalHuntUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    体验 SIGNAL HUNT <span aria-hidden="true">↗</span>
-                  </a>
-                ) : null}
-              </div>
-            </div>
-            <aside className="hero__facts" aria-label="个人档案摘要">
-              <div>
-                <span>当前方向</span>
-                <strong>AI / Robotics / AIoT</strong>
-              </div>
-              <div>
-                <span>站内档案</span>
-                <strong>
-                  {projects.length} 个项目
-                  {latestPosts.length ? ` · ${latestPosts.length} 篇近期文章` : ""}
-                </strong>
-              </div>
-              <div>
-                <span>当前目标</span>
-                <p>{profile.goal}</p>
-              </div>
-            </aside>
-          </div>
-          <div className="hero__focus" aria-label="关注方向">
-            <span>研究与实践方向</span>
-            <div>
-              {profile.focus.map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-          </div>
-        </Container>
-      </section>
+      <ImmersiveHero />
 
       <section className="section section--projects">
         <Container>

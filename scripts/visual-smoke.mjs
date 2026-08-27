@@ -121,15 +121,28 @@ try {
       fullPage: false,
     });
     if (viewport.viewportName === "390" && viewport.route === "/") {
-      await page
-        .locator('summary[aria-label="打开导航菜单"]')
-        .click();
-      const mobileNavigation = page.getByRole("navigation", {
-        name: "移动端主导航",
+      await page.locator('button[aria-label="打开导航菜单"]').click();
+      await page.waitForTimeout(900);
+      const overlayOpen = await page.evaluate(() => {
+        const overlay = document.querySelector("div[class*='backdrop-blur-xl']");
+        return overlay
+          ? getComputedStyle(overlay).opacity === "1"
+          : false;
       });
-      if (!(await mobileNavigation.isVisible())) {
-        throw new Error("390px 移动端导航无法打开");
+      if (!overlayOpen) {
+        throw new Error("390px 首页移动菜单无法打开");
       }
+      await page.locator('button[aria-label="关闭导航菜单"]').click();
+      await page.waitForTimeout(600);
+    }
+    if (viewport.viewportName === "1440" && viewport.route === "/") {
+      await page.evaluate(() => window.scrollTo(0, window.innerHeight));
+      await page.waitForTimeout(500);
+      await page.screenshot({
+        path: path.join(outputDirectory, "home-scroll-1440.png"),
+        fullPage: false,
+      });
+      await page.evaluate(() => window.scrollTo(0, 0));
     }
     console.log(
       `${viewport.viewportName}px ${viewport.route}：通过，无横向溢出（${layout.clientWidth}px）`,

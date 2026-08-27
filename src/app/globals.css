@@ -1,31 +1,51 @@
+@layer base;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme {
+  --font-geist: "Geist", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ========================================
    01. Design Tokens
 ======================================== */
 
 :root {
-  --color-background: #f5f7fa;
-  --color-surface: #ffffff;
-  --color-surface-subtle: #edf1f6;
-  --color-surface-strong: #e4eaf1;
-  --color-text-primary: #101828;
-  --color-text-secondary: #475467;
-  --color-text-tertiary: #667085;
-  --color-text-muted: #667085;
-  --color-text-decorative: #98a2b3;
-  --color-border: #d6dee8;
-  --color-border-strong: #b8c4d1;
-  --color-accent: #2563eb;
-  --color-accent-hover: #1d4ed8;
-  --color-accent-soft: #e8f0ff;
-  --color-success: #087e5b;
-  --color-warning: #a15c00;
-  --color-danger: #c4320a;
-  --color-code: #111827;
-  --color-code-border: #344054;
-  --color-dark: #101828;
-  --color-dark-secondary: #1d2939;
+  --color-background: #0a0c10;
+  --color-surface: #10141b;
+  --color-surface-subtle: #141a23;
+  --color-surface-strong: #1b2330;
+  --color-on-accent: #ffffff;
+  --color-text-primary: #f8fafc;
+  --color-text-secondary: #c2cbd8;
+  --color-text-tertiary: #8f9cb0;
+  --color-text-muted: #8f9cb0;
+  --color-text-decorative: #5d6b80;
+  --color-border: #232c3a;
+  --color-border-strong: #344156;
+  --color-accent: #3b82f6;
+  --color-accent-hover: #60a5fa;
+  --color-accent-soft: #14243d;
+  --color-success: #34d399;
+  --color-warning: #f0a43c;
+  --color-danger: #f97066;
+  --color-code: #0b0f16;
+  --color-code-border: #2b3648;
+  --color-dark: #0d1117;
+  --color-dark-secondary: #171e2a;
   --color-dark-text: #f8fafc;
-  --color-dark-muted: #98a2b3;
+  --color-dark-muted: #94a3b8;
   --font-sans: "Inter", "SF Pro Display", "SF Pro Text", "PingFang SC",
     "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
@@ -79,13 +99,15 @@ body {
 }
 
 ::selection {
-  color: var(--color-surface);
+  color: var(--color-on-accent);
   background: var(--color-accent);
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 }
 
 button,
@@ -157,7 +179,7 @@ h3 {
   position: relative;
   z-index: 50;
   border-bottom: 1px solid var(--color-border);
-  background: rgb(245 247 250 / 94%);
+  background: rgb(10 12 16 / 94%);
   backdrop-filter: blur(10px);
 }
 
@@ -236,7 +258,7 @@ h3 {
 }
 
 .button--primary {
-  color: var(--color-surface);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
   background: var(--color-accent);
 }
@@ -358,7 +380,7 @@ h3 {
 
 .hero__facts > div {
   padding: 1.7rem 1.5rem;
-  border-bottom: 1px solid rgb(214 222 232 / 62%);
+  border-bottom: 1px solid rgb(35 43 56 / 62%);
 }
 
 .hero__facts > div:last-child {
@@ -1078,7 +1100,7 @@ h3 {
 }
 
 .category-filter button.is-active {
-  color: var(--color-surface);
+  color: var(--color-on-accent);
   border-color: var(--color-accent);
   background: var(--color-accent);
 }
@@ -2121,7 +2143,7 @@ h3 {
   }
 
   .hero__facts > div:first-child {
-    border-right: 1px solid rgb(214 222 232 / 62%);
+    border-right: 1px solid rgb(35 43 56 / 62%);
   }
 
   .hero__facts > div:nth-child(3) {
