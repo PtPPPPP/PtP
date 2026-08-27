@@ -11,7 +11,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "visual:check": "node scripts/visual-smoke.mjs",
-    "deploy": "next build && wrangler deploy",
+    "deploy": "npm run build && wrangler deploy",
     "deploy:preview": "wrangler dev"
   },
   "dependencies": {
