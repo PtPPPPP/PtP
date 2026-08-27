@@ -83,7 +83,7 @@ published: true
 
 ## 环境变量与部署
 
-复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_SITE_URL` 改成最终域名。它用于 canonical URL、sitemap 和结构化数据。`NEXT_PUBLIC_SIGNAL_HUNT_URL` 可选，配置后首页与项目详情页会出现 SIGNAL HUNT 入口；生产构建未配置正式域名时入口自动隐藏。
+复制 `.env.example` 为 `.env.local`，把 `NEXT_PUBLIC_SITE_URL` 改成最终域名。它用于 canonical URL、sitemap 和结构化数据。`NEXT_PUBLIC_SIGNAL_HUNT_URL` 可选，配置后首页与项目详情页会出现 SIGNAL HUNT 的「在线体验」与「管理后台」入口；生产构建未配置正式域名时入口自动隐藏。注意：该变量必须持久化写入 `.env.local`（或部署环境配置），不能只在某次终端会话里临时设置，否则下一次构建部署时入口会消失。生产正式值为 `https://lottery.berl1n.xyz`。
 
 项目使用 `output: "export"` 静态导出，部署在 Cloudflare Workers（静态资源托管）。部署命令：
 
