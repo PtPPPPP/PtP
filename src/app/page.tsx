@@ -32,7 +32,7 @@ export default function HomePage() {
     <>
       <ImmersiveHero />
 
-      <section className="section section--projects">
+      <section className="section">
         <Container>
           <SectionHeading
             index="01"
@@ -40,7 +40,7 @@ export default function HomePage() {
             title="用完整项目，验证一个具体问题。"
             description="这里优先展示有明确场景、技术边界和个人工作的项目，而不是只列出技术名词。"
           />
-          <ProjectGrid projects={featuredProjects} />
+          <ProjectGrid projects={featuredProjects} variant="featured" />
           <div className="section-action">
             <Link className="button button--secondary" href="/projects">
               查看全部 {projects.length} 个项目
@@ -50,7 +50,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="section section--skills">
+      <section className="section">
         <Container>
           <SectionHeading
             index="02"
@@ -79,7 +79,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="section section--notes">
+      <section className="section">
         <Container>
           <SectionHeading
             index="04"
@@ -100,7 +100,7 @@ export default function HomePage() {
         </Container>
       </section>
 
-      <section className="section section--contact">
+      <section className="section">
         <Container>
           <SectionHeading
             index="05"

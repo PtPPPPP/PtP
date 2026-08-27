@@ -11,7 +11,6 @@ export function ExperienceTimeline({
     <ol className={`timeline ${compact ? "timeline--compact" : ""}`}>
       {items.map((item) => (
         <li key={item.id}>
-          <div className="timeline__marker" aria-hidden="true" />
           <div className="timeline__period">
             <span>{item.type}</span>
             <p>{item.period}</p>

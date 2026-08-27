@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="site-footer">
       <Container>
         <div className="site-footer__lead">
-          <p>Technical Archive</p>
+          <p className="eyebrow">Contact</p>
           <h2>继续学习，也继续把想法做成可以验证的东西。</h2>
         </div>
         <div className="site-footer__bottom">

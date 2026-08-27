@@ -37,13 +37,12 @@ export default function AboutPage() {
   return (
     <Container className="page-shell about-page">
       <PageIntro
-        index="04"
         eyebrow="About"
         title="在自动化与软件之间，建立自己的工程坐标。"
         description={profile.introduction}
       />
       <section className="about-statement">
-        <p>Current direction</p>
+        <p className="eyebrow">Current direction</p>
         <h2>{profile.goal}</h2>
       </section>
       <section className="about-section">

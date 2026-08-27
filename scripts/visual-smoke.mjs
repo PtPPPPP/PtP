@@ -127,7 +127,7 @@ try {
       await page.locator('button[aria-label="打开导航菜单"]').click();
       await page.waitForTimeout(900);
       const overlayOpen = await page.evaluate(() => {
-        const overlay = document.querySelector("div[class*='backdrop-blur-xl']");
+        const overlay = document.querySelector("div.fixed.h-screen");
         return overlay
           ? getComputedStyle(overlay).opacity === "1"
           : false;

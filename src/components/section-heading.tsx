@@ -15,10 +15,8 @@ export function SectionHeading({
         <span aria-hidden="true">{index}</span>
         <span>{eyebrow}</span>
       </div>
-      <div>
-        <h2>{title}</h2>
-        {description ? <p>{description}</p> : null}
-      </div>
+      <h2>{title}</h2>
+      {description ? <p>{description}</p> : null}
     </div>
   );
 }

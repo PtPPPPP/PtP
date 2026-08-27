@@ -15,8 +15,7 @@ export default function ProjectsPage() {
   return (
     <Container className="page-shell">
       <PageIntro
-        index="01"
-        eyebrow="Project index"
+        eyebrow="Projects"
         title="作品不是终点，验证才是。"
         description="按方向、技术或关键词浏览项目。每个项目档案都明确说明当前状态、个人工作与已知限制。"
       />

@@ -15,7 +15,6 @@ export default function ExperiencePage() {
   return (
     <Container className="page-shell">
       <PageIntro
-        index="02"
         eyebrow="Experience"
         title="成长不是一条填满的时间线。"
         description="这里记录教育、项目和实践过程。没有被确认的单位、职位与时间会保持空缺，等真实信息补充后再更新。"

@@ -16,9 +16,6 @@ export function getProjectStatusLabel(status: ProjectStatus): string {
 
 export function StatusBadge({ status }: { status: ProjectStatus }) {
   return (
-    <span className="status-badge">
-      <i aria-hidden="true" />
-      {getProjectStatusLabel(status)}
-    </span>
+    <span className="status-badge">{getProjectStatusLabel(status)}</span>
   );
 }
