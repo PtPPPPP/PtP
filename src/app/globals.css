@@ -22,10 +22,10 @@
 ======================================== */
 
 :root {
-  --color-background: #0a0c10;
-  --color-surface: #10141b;
-  --color-surface-subtle: #141a23;
-  --color-surface-strong: #1b2330;
+  --color-background: #000000;
+  --color-surface: #0a0e14;
+  --color-surface-subtle: #0f141c;
+  --color-surface-strong: #161d28;
   --color-on-accent: #ffffff;
   --color-text-primary: #f8fafc;
   --color-text-secondary: #c2cbd8;
@@ -46,7 +46,7 @@
   --color-dark-secondary: #171e2a;
   --color-dark-text: #f8fafc;
   --color-dark-muted: #94a3b8;
-  --font-sans: "Inter", "SF Pro Display", "SF Pro Text", "PingFang SC",
+  --font-sans: "Geist", "Inter", "SF Pro Display", "SF Pro Text", "PingFang SC",
     "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --text-display: clamp(3.5rem, 5vw, 4rem);
@@ -169,69 +169,6 @@ h3 {
   width: min(100%, calc(var(--max-width) + var(--gutter) * 2));
   margin-inline: auto;
   padding-inline: var(--gutter);
-}
-
-/* ========================================
-   04. Site Navigation
-======================================== */
-
-.site-header {
-  position: relative;
-  z-index: 50;
-  border-bottom: 1px solid var(--color-border);
-  background: rgb(10 12 16 / 94%);
-  backdrop-filter: blur(10px);
-}
-
-.site-header__inner {
-  display: flex;
-  min-height: 76px;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.desktop-nav {
-  display: flex;
-  align-items: center;
-  margin-inline: auto;
-  gap: clamp(1.5rem, 3vw, 2.5rem);
-  font-size: 0.8125rem;
-  font-weight: 500;
-}
-
-.desktop-nav a {
-  position: relative;
-  padding-block: 0.45rem;
-  color: var(--color-text-secondary);
-}
-
-.desktop-nav a::after {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  height: 1px;
-  background: var(--color-accent);
-  content: "";
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform var(--transition-fast);
-}
-
-.desktop-nav a:hover,
-.desktop-nav a:focus-visible {
-  color: var(--color-text-primary);
-}
-
-.desktop-nav a:hover::after,
-.desktop-nav a:focus-visible::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-.mobile-nav {
-  display: none;
-  margin-inline-start: auto;
 }
 
 /* ========================================
@@ -1890,79 +1827,6 @@ h3 {
     --text-body: 0.9375rem;
     --gutter: 1.25rem;
     --section-space: clamp(4rem, 12vw, 5.5rem);
-  }
-
-  .site-header__inner {
-    min-height: 68px;
-  }
-
-  .desktop-nav {
-    display: none;
-  }
-
-  .mobile-nav {
-    display: block;
-  }
-
-  .mobile-nav summary {
-    display: flex;
-    min-height: 44px;
-    align-items: center;
-    gap: 0.65rem;
-    cursor: pointer;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    list-style: none;
-  }
-
-  .mobile-nav summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .mobile-nav__icon {
-    display: grid;
-    width: 20px;
-    gap: 5px;
-  }
-
-  .mobile-nav__icon i {
-    display: block;
-    height: 1px;
-    background: var(--color-text-primary);
-    transition: transform var(--transition-fast);
-  }
-
-  .mobile-nav[open] .mobile-nav__icon i:first-child {
-    transform: translateY(3px) rotate(45deg);
-  }
-
-  .mobile-nav[open] .mobile-nav__icon i:last-child {
-    transform: translateY(-3px) rotate(-45deg);
-  }
-
-  .mobile-nav nav {
-    position: absolute;
-    top: 68px;
-    right: 0;
-    left: 0;
-    display: grid;
-    padding: 0.5rem var(--gutter) 1.25rem;
-    border-bottom: 1px solid var(--color-border-strong);
-    background: var(--color-surface);
-  }
-
-  .mobile-nav nav a {
-    display: flex;
-    gap: 1rem;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid var(--color-border);
-    font-size: 0.9375rem;
-  }
-
-  .mobile-nav nav a span {
-    color: var(--color-accent);
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
   }
 
   .hero {

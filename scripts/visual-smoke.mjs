@@ -120,7 +120,10 @@ try {
       ),
       fullPage: false,
     });
-    if (viewport.viewportName === "390" && viewport.route === "/") {
+    if (
+      viewport.viewportName === "390" &&
+      (viewport.route === "/" || viewport.route === "/projects")
+    ) {
       await page.locator('button[aria-label="打开导航菜单"]').click();
       await page.waitForTimeout(900);
       const overlayOpen = await page.evaluate(() => {
@@ -130,7 +133,7 @@ try {
           : false;
       });
       if (!overlayOpen) {
-        throw new Error("390px 首页移动菜单无法打开");
+        throw new Error(`390px ${viewport.route} 移动菜单无法打开`);
       }
       await page.locator('button[aria-label="关闭导航菜单"]').click();
       await page.waitForTimeout(600);

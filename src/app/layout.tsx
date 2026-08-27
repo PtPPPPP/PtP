@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
-import { HideOnHome } from "@/components/hide-on-home";
 import { JsonLd } from "@/components/json-ld";
+import { SiteNav } from "@/components/site-nav";
 import { profile } from "@/data/profile";
 import { createPageMetadata } from "@/lib/metadata";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
@@ -65,9 +64,7 @@ export default function RootLayout({
           跳到主要内容
         </a>
         <JsonLd data={structuredData} />
-        <HideOnHome>
-          <Header />
-        </HideOnHome>
+        <SiteNav />
         <main id="main-content">{children}</main>
         <Footer />
       </body>
