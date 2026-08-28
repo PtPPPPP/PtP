@@ -9,9 +9,9 @@ export function PageIntro({
 }) {
   return (
     <header className="page-intro">
-      <p className="page-intro__meta">{eyebrow}</p>
+      <p className="eyebrow">{eyebrow}</p>
       <h1>{title}</h1>
-      <p>{description}</p>
+      <p className="page-intro__lead">{description}</p>
     </header>
   );
 }

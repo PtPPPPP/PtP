@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { BackLink } from "@/components/back-link";
+import { Button } from "@/components/button";
 import { Container } from "@/components/container";
 import { JsonLd } from "@/components/json-ld";
 import {
@@ -80,34 +81,19 @@ export default async function ProjectDetailPage({
           <p>{project.subtitle}</p>
           {project.github || project.demo || project.admin ? <div className="case-study__links">
             {project.github ? (
-              <a
-                className="button button--secondary"
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Button href={project.github} external variant="secondary">
                 查看源码 <span aria-hidden="true">↗</span>
-              </a>
+              </Button>
             ) : null}
             {project.admin ? (
-              <a
-                className="button button--secondary"
-                href={project.admin}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Button href={project.admin} external variant="secondary">
                 管理后台 <span aria-hidden="true">↗</span>
-              </a>
+              </Button>
             ) : null}
             {project.demo ? (
-              <a
-                className="button button--primary"
-                href={project.demo}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <Button href={project.demo} external variant="primary">
                 在线演示 <span aria-hidden="true">↗</span>
-              </a>
+              </Button>
             ) : null}
           </div> : null}
         </header>

@@ -46,7 +46,7 @@ export default function AboutPage() {
         <h2>{profile.goal}</h2>
       </section>
       <section className="about-section">
-        <div className="about-section__label">项目与学习方法</div>
+        <div className="about-section__label eyebrow">项目与学习方法</div>
         <div className="principle-list">
           {principles.map((principle) => (
             <article key={principle.index}>
@@ -58,11 +58,11 @@ export default function AboutPage() {
         </div>
       </section>
       <section className="about-section">
-        <div className="about-section__label">技能与兴趣</div>
+        <div className="about-section__label eyebrow">技能与兴趣</div>
         <SkillMatrix />
       </section>
       <section className="about-section">
-        <div className="about-section__label">公开联系入口</div>
+        <div className="about-section__label eyebrow">公开联系入口</div>
         <ContactLinks />
       </section>
     </Container>

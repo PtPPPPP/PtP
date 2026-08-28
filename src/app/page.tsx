@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BlogList } from "@/components/blog-list";
+import { Button } from "@/components/button";
 import { ContactLinks } from "@/components/contact-links";
 import { Container } from "@/components/container";
 import { ExperienceTimeline } from "@/components/experience-timeline";
@@ -42,10 +43,10 @@ export default function HomePage() {
           />
           <ProjectGrid projects={featuredProjects} variant="featured" />
           <div className="section-action">
-            <Link className="button button--secondary" href="/projects">
+            <Button href="/projects" variant="secondary">
               查看全部 {projects.length} 个项目
               <span aria-hidden="true">→</span>
-            </Link>
+            </Button>
           </div>
         </Container>
       </section>
@@ -75,8 +76,7 @@ export default function HomePage() {
             <Link className="text-link" href="/experience">
               查看完整时间线 <span aria-hidden="true">→</span>
             </Link>
-          </div>
-        </Container>
+          </div>        </Container>
       </section>
 
       <section className="section">
@@ -93,9 +93,9 @@ export default function HomePage() {
             <p className="empty-note">正式文章正在整理，当前没有公开内容。</p>
           )}
           <div className="section-action">
-            <Link className="button button--secondary" href="/blog">
+            <Button href="/blog" variant="secondary">
               查看全部文章 <span aria-hidden="true">→</span>
-            </Link>
+            </Button>
           </div>
         </Container>
       </section>
@@ -110,9 +110,9 @@ export default function HomePage() {
           />
           <ContactLinks />
           <div className="section-action">
-            <Link className="button button--primary" href="/contact">
+            <Button href="/contact" variant="primary">
               前往联系页面 <span aria-hidden="true">→</span>
-            </Link>
+            </Button>
           </div>
         </Container>
       </section>

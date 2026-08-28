@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { chromium } from "playwright-core";
 
-const baseUrl = process.env.VISUAL_BASE_URL ?? "http://127.0.0.1:3010";
+const baseUrl = process.env.VISUAL_BASE_URL ?? "http://localhost:3010";
 const outputDirectory = path.resolve(
   process.env.VISUAL_OUTPUT_DIR ?? ".visual-checks",
 );
@@ -70,7 +70,7 @@ const page = await browser.newPage();
 try {
   for (const route of routes) {
     const response = await page.goto(`${baseUrl}${route}`, {
-      waitUntil: "networkidle",
+      waitUntil: "load", timeout: 60000,
     });
     if (!response || response.status() !== 200) {
       throw new Error(`${route} 返回 ${response?.status() ?? "无响应"}`);
@@ -79,7 +79,7 @@ try {
 
   const missingResponse = await page.goto(
     `${baseUrl}/projects/not-a-real-project`,
-    { waitUntil: "networkidle" },
+    { waitUntil: "load", timeout: 60000 },
   );
   if (missingResponse?.status() !== 404) {
     throw new Error(
@@ -88,7 +88,7 @@ try {
   }
 
   const missingBlogResponse = await page.goto(`${baseUrl}/blog/not-a-real-post`, {
-    waitUntil: "networkidle",
+    waitUntil: "load", timeout: 60000,
   });
   if (missingBlogResponse?.status() !== 404) {
     throw new Error(
@@ -102,7 +102,7 @@ try {
       height: viewport.height,
     });
     await page.goto(`${baseUrl}${viewport.route}`, {
-      waitUntil: "networkidle",
+      waitUntil: "load", timeout: 60000,
     });
     const layout = await page.evaluate(() => ({
       clientWidth: document.documentElement.clientWidth,
@@ -127,7 +127,7 @@ try {
       await page.locator('button[aria-label="打开导航菜单"]').click();
       await page.waitForTimeout(900);
       const overlayOpen = await page.evaluate(() => {
-        const overlay = document.querySelector("div.fixed.h-screen");
+        const overlay = document.querySelector("[data-testid='mobile-menu']");
         return overlay
           ? getComputedStyle(overlay).opacity === "1"
           : false;

@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { Button } from "@/components/button";
 import { Container } from "@/components/container";
 
 const HERO_VIDEO_URL =
@@ -22,14 +22,14 @@ export function ImmersiveHero() {
         tabIndex={-1}
       />
 
-      {/* Hero content */}
-      <div className="relative z-10 flex h-[calc(100vh-80px)] flex-col justify-between pt-12 pb-10 sm:pb-12 sm:pt-16 md:pb-16 md:pt-20">
+      {/* Hero content — 顶部留白须 ≥ 导航高度，避免与 overlay 导航重叠 */}
+      <div className="relative z-10 flex h-[calc(100vh-80px)] flex-col justify-between pt-24 pb-10 sm:pb-12 md:pb-16">
         <Container>
           <div className="max-w-3xl">
-            <span className="mb-4 block animate-[fadeSlideUp_0.8s_ease_0.2s_both] text-xs text-white/90 sm:mb-6 sm:text-sm">
+            <span className="eyebrow eyebrow--inverse mb-4 block animate-[fadeSlideUp_0.8s_ease_0.2s_both] sm:mb-6">
               自动化 · 人工智能 · 机器人
             </span>
-            <h1 className="animate-[fadeSlideUp_0.8s_ease_0.4s_both] text-3xl font-medium leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+            <h1 className="hero-display animate-[fadeSlideUp_0.8s_ease_0.4s_both] text-white">
               把自动化、人工智能
               <br />
               与产品工程，
@@ -40,16 +40,17 @@ export function ImmersiveHero() {
         </Container>
         <Container>
           <div>
-            <p className="mb-5 max-w-sm animate-[fadeSlideUp_0.8s_ease_0.7s_both] text-sm leading-relaxed text-white/60 sm:mb-6 sm:max-w-lg sm:text-base md:text-lg">
+            <p className="hero-lead mb-5 animate-[fadeSlideUp_0.8s_ease_0.7s_both] sm:mb-6">
               通过完整项目验证想法，从产品设计、前端开发到算法与系统集成，持续探索软件与现实世界的连接。
             </p>
-            <Link
+            <Button
               href="/projects"
-              className="inline-flex animate-[fadeSlideUp_0.8s_ease_0.9s_both] items-center gap-2 rounded-md bg-white px-5 py-2.5 text-sm font-medium text-black transition-colors duration-150 hover:bg-white/85 sm:px-6 sm:py-3"
+              tone="inverse"
+              className="animate-[fadeSlideUp_0.8s_ease_0.9s_both]"
             >
               查看我的作品
               <ArrowRight size={16} aria-hidden="true" />
-            </Link>
+            </Button>
           </div>
         </Container>
       </div>

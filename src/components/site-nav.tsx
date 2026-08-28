@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/button";
 import { navigation } from "@/data/navigation";
 import { profile } from "@/data/profile";
 
@@ -24,21 +25,22 @@ export function SiteNav() {
     };
   }, [mobileMenuOpen]);
 
-  // 同一 Header，仅 background / foreground / border 可因 variant 不同
-  const variantClass = isHome
-    ? "absolute inset-x-0 top-0 text-white"
-    : "relative border-b border-[var(--color-border)] bg-[var(--color-background)] text-[var(--color-text-primary)]";
+  // 同一 Header，仅 background / foreground / border 可因 variant 不同。
+  // 菜单打开时导航切换为亮色场景（fixed + 白底黑字）：Logo 成为菜单的品牌锚点，
+  // 关闭按钮也始终留在视口内（否则首页滚动后打开菜单会够不到关闭按钮）。
+  const sceneClass = mobileMenuOpen
+    ? "fixed inset-x-0 top-0 bg-paper text-ink"
+    : isHome
+      ? "absolute inset-x-0 top-0 text-white"
+      : "relative border-b border-hairline bg-paper text-ink";
   const linkClass = isHome
     ? "text-white/80 transition-colors duration-150 hover:text-white"
-    : "text-[var(--color-text-secondary)] transition-colors duration-150 hover:text-[var(--color-text-primary)]";
-  const ctaClass = isHome
-    ? "bg-white text-black transition-colors duration-150 hover:bg-white/85"
-    : "bg-[var(--color-text-primary)] text-white transition-colors duration-150 hover:bg-[#2f343c]";
+    : "text-ink-soft transition-colors duration-150 hover:text-ink";
 
   return (
     <>
       <nav
-        className={`z-50 py-5 ${variantClass}`}
+        className={`z-50 py-5 transition-colors duration-300 ${sceneClass}`}
         aria-label={isHome ? "首屏导航" : "主导航"}
       >
         <div className="container flex items-center justify-between">
@@ -52,23 +54,27 @@ export function SiteNav() {
             </Link>
             <div className="ml-10 hidden items-center gap-8 md:flex">
               {navigation.map((item) => (
-                <Link key={item.href} href={item.href} className={`text-sm ${linkClass}`}>
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`text-sm ${linkClass}`}
+                >
                   {item.label}
                 </Link>
               ))}
             </div>
           </div>
-          <Link
+          <Button
             href="/contact"
-            className={`hidden rounded-md px-5 py-2 text-sm font-medium md:block ${ctaClass}`}
+            variant="primary"
+            tone={isHome ? "inverse" : "default"}
+            className="hidden md:inline-flex"
           >
             联系我
-          </Link>
+          </Button>
           <button
             type="button"
-            className={`relative z-50 flex h-10 w-10 items-center justify-center active:scale-90 md:hidden ${
-              mobileMenuOpen ? "text-[var(--color-text-primary)]" : ""
-            }`}
+            className="relative z-50 flex h-10 w-10 items-center justify-center active:scale-90 md:hidden"
             aria-expanded={mobileMenuOpen}
             aria-label={mobileMenuOpen ? "关闭导航菜单" : "打开导航菜单"}
             onClick={() => setMobileMenuOpen((open) => !open)}
@@ -91,7 +97,8 @@ export function SiteNav() {
 
       {/* Mobile menu overlay — 全站统一同一套 */}
       <div
-        className={`fixed inset-x-0 top-0 z-40 h-screen w-full bg-[var(--color-background)] transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        data-testid="mobile-menu"
+        className={`fixed inset-x-0 top-0 z-40 h-screen w-full bg-paper transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           mobileMenuOpen
             ? "opacity-100"
             : "pointer-events-none opacity-0"
@@ -107,19 +114,15 @@ export function SiteNav() {
             <Link
               key={item.href}
               href={item.href}
-              className="py-4 text-3xl font-medium text-[var(--color-text-primary)] transition-colors duration-150 hover:text-[var(--color-text-secondary)]"
+              className="py-4 text-3xl font-medium text-ink transition-colors duration-150 hover:text-ink-soft"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item.label}
             </Link>
           ))}
-          <Link
-            href="/contact"
-            className="mt-6 rounded-md bg-[var(--color-text-primary)] px-8 py-3.5 text-center text-base font-medium text-white transition-colors duration-150 hover:bg-[#2f343c]"
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <Button href="/contact" className="mt-6 w-full">
             联系我
-          </Link>
+          </Button>
         </div>
       </div>
     </>
