@@ -48,24 +48,19 @@ export function absoluteUrl(path: string): string {
   return new URL(path, getSiteUrl()).toString();
 }
 
-// SIGNAL HUNT（抽奖系统）入口。NEXT_PUBLIC_SIGNAL_HUNT_URL 配置站点根地址，
-// 这里统一拼接访客抽奖页 /display 与管理后台 /admin/dashboard。开发环境允许指向本地开发服务器；
-// 生产构建必须配置正式域名，否则入口隐藏，绝不回退到 localhost。
+// SIGNAL HUNT（抽奖系统）入口。NEXT_PUBLIC_SIGNAL_HUNT_URL 可覆盖站点根地址，
+// 这里统一拼接访客抽奖页 /display 与管理后台 /admin/dashboard。
+// 未配置时回退到正式域名：这些 NEXT_PUBLIC_* 变量在构建时内联，
+// 部署环境一旦漏配，入口会在上线后静默消失（已发生过），因此正式域名直接写进代码兜底，
+// 环境变量只作为开发环境指向本机服务器的覆盖手段。生产构建仍拒绝本机地址。
+const SIGNAL_HUNT_FALLBACK_ORIGIN = "https://lottery.berl1n.xyz";
 const localSignalHuntHosts = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
 
-let hasWarnedAboutSignalHuntUrl = false;
-
-function getSignalHuntOrigin(): string | null {
+function getSignalHuntOrigin(): string {
   const configuredUrl = process.env.NEXT_PUBLIC_SIGNAL_HUNT_URL?.trim();
 
   if (!configuredUrl) {
-    if (process.env.NODE_ENV === "production" && !hasWarnedAboutSignalHuntUrl) {
-      hasWarnedAboutSignalHuntUrl = true;
-      console.warn(
-        "[site] 生产构建未配置 NEXT_PUBLIC_SIGNAL_HUNT_URL，SIGNAL HUNT 入口将隐藏；部署前必须配置正式域名。",
-      );
-    }
-    return null;
+    return SIGNAL_HUNT_FALLBACK_ORIGIN;
   }
 
   let baseUrl: URL;
@@ -89,33 +84,24 @@ function getSignalHuntOrigin(): string | null {
   return baseUrl.origin;
 }
 
-export function getSignalHuntUrl(): string | null {
-  const origin = getSignalHuntOrigin();
-  if (!origin) return null;
-  return new URL("/display", origin).toString();
+export function getSignalHuntUrl(): string {
+  return new URL("/display", getSignalHuntOrigin()).toString();
 }
 
-export function getSignalHuntAdminUrl(): string | null {
-  const origin = getSignalHuntOrigin();
-  if (!origin) return null;
-  return new URL("/admin/dashboard", origin).toString();
+export function getSignalHuntAdminUrl(): string {
+  return new URL("/admin/dashboard", getSignalHuntOrigin()).toString();
 }
 
-// Diamond Track Atlas（钻石田径图鉴）入口。NEXT_PUBLIC_STDM_URL 配置站点根地址。
-// 与 SIGNAL HUNT 相同：开发环境允许本机地址，生产构建必须配置正式域名，否则入口隐藏。
-let hasWarnedAboutStdmUrl = false;
+// Diamond Track Atlas（钻石田径图鉴）入口。NEXT_PUBLIC_STDM_URL 可覆盖站点根地址。
+// 与 SIGNAL HUNT 相同：正式域名写进代码兜底，环境变量仅用于开发环境指向本机服务器；
+// 生产构建仍拒绝本机地址。
+const STDM_FALLBACK_ORIGIN = "https://stdm.berl1n.xyz";
 
-export function getStdmUrl(): string | null {
+export function getStdmUrl(): string {
   const configuredUrl = process.env.NEXT_PUBLIC_STDM_URL?.trim();
 
   if (!configuredUrl) {
-    if (process.env.NODE_ENV === "production" && !hasWarnedAboutStdmUrl) {
-      hasWarnedAboutStdmUrl = true;
-      console.warn(
-        "[site] 生产构建未配置 NEXT_PUBLIC_STDM_URL，Diamond Track Atlas 入口将隐藏；部署前必须配置正式域名。",
-      );
-    }
-    return null;
+    return STDM_FALLBACK_ORIGIN;
   }
 
   let baseUrl: URL;

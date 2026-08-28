@@ -43,7 +43,7 @@ export function ProjectCard({
           <Link className="text-link" href={`/projects/${project.slug}`}>
             查看项目 <span aria-hidden="true">→</span>
           </Link>
-          {variant === "full" && project.demo ? (
+          {project.demo ? (
             <a
               className="text-link"
               href={project.demo}
