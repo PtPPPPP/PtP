@@ -63,6 +63,98 @@ const viewports = viewportSizes.flatMap((viewport) =>
   })),
 );
 
+async function waitForStableVisualState(page) {
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    document.documentElement.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+  });
+
+  const hero = page.locator(".hero-display");
+  if (await hero.count()) {
+    await page.waitForFunction(() => {
+      const heading = document.querySelector(".hero-display");
+      const lead = document.querySelector(".hero-lead");
+      const cta = document.querySelector(".hero-lead + .button");
+      const video = document.querySelector("video");
+      return (
+        heading &&
+        lead &&
+        cta &&
+        Number.parseFloat(getComputedStyle(heading).opacity) >= 0.99 &&
+        Number.parseFloat(getComputedStyle(lead).opacity) >= 0.99 &&
+        Number.parseFloat(getComputedStyle(cta).opacity) >= 0.99 &&
+        video instanceof HTMLVideoElement &&
+        video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
+      );
+    });
+  }
+}
+
+async function findCjkHeadingWrapProblems(page) {
+  return page.evaluate(() => {
+    const segmenter = new Intl.Segmenter("zh-CN", { granularity: "word" });
+    const closingPunctuation = "，。！？；：、）】》";
+    const problems = [];
+
+    for (const heading of document.querySelectorAll("h1, h2, h3")) {
+      const range = document.createRange();
+      const walker = document.createTreeWalker(heading, NodeFilter.SHOW_TEXT);
+      const characters = [];
+      let text = "";
+      let textNode = walker.nextNode();
+
+      while (textNode) {
+        for (let index = 0; index < textNode.textContent.length; index += 1) {
+          range.setStart(textNode, index);
+          range.setEnd(textNode, index + 1);
+          text += textNode.textContent[index];
+          characters.push({
+            character: textNode.textContent[index],
+            y: Math.round(range.getBoundingClientRect().y),
+          });
+        }
+        textNode = walker.nextNode();
+      }
+
+      for (const segment of segmenter.segment(text)) {
+        if (!segment.isWordLike || !/[\p{Script=Han}]/u.test(segment.segment)) {
+          continue;
+        }
+        const linePositions = new Set(
+          characters
+            .slice(segment.index, segment.index + segment.segment.length)
+            .filter(({ character }) => character.trim())
+            .map(({ y }) => y),
+        );
+        if (linePositions.size > 1) {
+          problems.push(`词组“${segment.segment}”被拆行`);
+        }
+      }
+
+      for (let index = 1; index < characters.length; index += 1) {
+        const current = characters[index];
+        let previousIndex = index - 1;
+        while (
+          previousIndex >= 0 &&
+          !characters[previousIndex].character.trim()
+        ) {
+          previousIndex -= 1;
+        }
+        if (
+          previousIndex >= 0 &&
+          closingPunctuation.includes(current.character) &&
+          current.y !== characters[previousIndex].y
+        ) {
+          problems.push(`标点“${current.character}”位于行首`);
+        }
+      }
+    }
+
+    return problems;
+  });
+}
+
 fs.mkdirSync(outputDirectory, { recursive: true });
 const browser = await chromium.launch({ executablePath, headless: true });
 const page = await browser.newPage();
@@ -70,7 +162,8 @@ const page = await browser.newPage();
 try {
   for (const route of routes) {
     const response = await page.goto(`${baseUrl}${route}`, {
-      waitUntil: "load", timeout: 60000,
+      waitUntil: "load",
+      timeout: 60000,
     });
     if (!response || response.status() !== 200) {
       throw new Error(`${route} 返回 ${response?.status() ?? "无响应"}`);
@@ -87,9 +180,13 @@ try {
     );
   }
 
-  const missingBlogResponse = await page.goto(`${baseUrl}/blog/not-a-real-post`, {
-    waitUntil: "load", timeout: 60000,
-  });
+  const missingBlogResponse = await page.goto(
+    `${baseUrl}/blog/not-a-real-post`,
+    {
+      waitUntil: "load",
+      timeout: 60000,
+    },
+  );
   if (missingBlogResponse?.status() !== 404) {
     throw new Error(
       `不存在的文章应返回 404，实际为 ${missingBlogResponse?.status() ?? "无响应"}`,
@@ -102,8 +199,10 @@ try {
       height: viewport.height,
     });
     await page.goto(`${baseUrl}${viewport.route}`, {
-      waitUntil: "load", timeout: 60000,
+      waitUntil: "load",
+      timeout: 60000,
     });
+    await waitForStableVisualState(page);
     const layout = await page.evaluate(() => ({
       clientWidth: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
@@ -112,6 +211,14 @@ try {
       throw new Error(
         `${viewport.viewportName}px ${viewport.route} 存在横向溢出：${layout.scrollWidth}px > ${layout.clientWidth}px`,
       );
+    }
+    if (viewport.viewportName === "390") {
+      const headingWrapProblems = await findCjkHeadingWrapProblems(page);
+      if (headingWrapProblems.length) {
+        throw new Error(
+          `390px ${viewport.route} 中文标题断行异常：${headingWrapProblems.join("；")}`,
+        );
+      }
     }
     await page.screenshot({
       path: path.join(
@@ -128,9 +235,7 @@ try {
       await page.waitForTimeout(900);
       const overlayOpen = await page.evaluate(() => {
         const overlay = document.querySelector("[data-testid='mobile-menu']");
-        return overlay
-          ? getComputedStyle(overlay).opacity === "1"
-          : false;
+        return overlay ? getComputedStyle(overlay).opacity === "1" : false;
       });
       if (!overlayOpen) {
         throw new Error(`390px ${viewport.route} 移动菜单无法打开`);

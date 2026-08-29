@@ -11,7 +11,7 @@ export function ImmersiveHero() {
   return (
     <div className="relative h-screen w-full overflow-hidden bg-black">
       <video
-        className="absolute inset-0 h-full w-full object-cover"
+        className="hero-media absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: "70% center" }}
         src={HERO_VIDEO_URL}
         autoPlay
@@ -30,11 +30,7 @@ export function ImmersiveHero() {
               自动化 · 人工智能 · 机器人
             </span>
             <h1 className="hero-display animate-[fadeSlideUp_0.8s_ease_0.4s_both] text-white">
-              把自动化、人工智能
-              <br />
-              与产品工程，
-              <br />
-              一步步连接起来。
+              把自动化、人工智能与产品工程，一步步连接起来。
             </h1>
           </div>
         </Container>
