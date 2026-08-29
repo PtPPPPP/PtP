@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import HomePage from "@/app/page";
 import ProjectsPage from "@/app/projects/page";
@@ -35,9 +35,20 @@ describe("关键页面渲染", () => {
     expect(
       screen.getAllByRole("link", { name: "联系我" }).length,
     ).toBeGreaterThanOrEqual(1);
-    expect(
-      screen.getByRole("button", { name: "打开导航菜单" }),
-    ).toBeInTheDocument();
+    const menuButton = screen.getByRole("button", { name: "打开导航菜单" });
+    const mobileMenu = screen.getByTestId("mobile-menu");
+
+    expect(menuButton).toHaveAttribute("aria-controls", "mobile-navigation");
+    expect(mobileMenu).toHaveAttribute("inert");
+
+    fireEvent.click(menuButton);
+    expect(menuButton).toHaveAttribute("aria-expanded", "true");
+    expect(mobileMenu).not.toHaveAttribute("inert");
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(menuButton).toHaveAttribute("aria-expanded", "false");
+    expect(mobileMenu).toHaveAttribute("inert");
+    expect(menuButton).toHaveFocus();
   });
 
   it("项目列表渲染全部项目", () => {

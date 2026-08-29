@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { MouseEventHandler, ReactNode } from "react";
 
 type ButtonProps = {
   href: string;
@@ -11,6 +11,7 @@ type ButtonProps = {
   /** 外链时新窗口打开 */
   external?: boolean;
   className?: string;
+  onClick?: MouseEventHandler<HTMLAnchorElement>;
 };
 
 export function Button({
@@ -20,6 +21,7 @@ export function Button({
   tone = "default",
   external = false,
   className = "",
+  onClick,
 }: ButtonProps) {
   const classes = [
     "button",
@@ -37,6 +39,7 @@ export function Button({
         href={href}
         target="_blank"
         rel="noopener noreferrer"
+        onClick={onClick}
       >
         {children}
       </a>
@@ -44,7 +47,7 @@ export function Button({
   }
 
   return (
-    <Link className={classes} href={href}>
+    <Link className={classes} href={href} onClick={onClick}>
       {children}
     </Link>
   );

@@ -13,3 +13,5 @@ Thumbs.db
 next-env.d.ts
 .wrangler/
 graphify-out/
+.freebuff/
+.qoder-tmp/

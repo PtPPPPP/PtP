@@ -42,6 +42,16 @@ describe("内容数据", () => {
         (post) => post.published && !post.sample && !post.draft,
       ),
     ).toBe(true);
+    expect(
+      getBlogPostBySlug("from-idea-to-mvp", {
+        includeUnpublished: false,
+      })?.sample,
+    ).toBe(false);
+    expect(
+      getBlogPostBySlug("from-idea-to-mvp", {
+        includeUnpublished: false,
+      })?.content,
+    ).not.toContain("示例");
   });
 
   it("导航链接使用有效站内路径", () => {

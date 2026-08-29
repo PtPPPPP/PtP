@@ -231,7 +231,26 @@ try {
       viewport.viewportName === "390" &&
       (viewport.route === "/" || viewport.route === "/projects")
     ) {
-      await page.locator('button[aria-label="打开导航菜单"]').click();
+      const openMenuButton = page.locator('button[aria-label="打开导航菜单"]');
+      const mobileMenu = page.locator("[data-testid='mobile-menu']");
+      const closedMenuIsInert = await mobileMenu.evaluate(
+        (element) => element.inert,
+      );
+      if (!closedMenuIsInert) {
+        throw new Error(`390px ${viewport.route} 关闭的移动菜单仍可聚焦`);
+      }
+
+      await openMenuButton.focus();
+      await page.keyboard.press("Tab");
+      const focusEnteredClosedMenu = await page.evaluate(() =>
+        Boolean(document.activeElement?.closest("[data-testid='mobile-menu']")),
+      );
+      if (focusEnteredClosedMenu) {
+        throw new Error(`390px ${viewport.route} 键盘进入了隐藏菜单`);
+      }
+
+      await openMenuButton.focus();
+      await openMenuButton.click();
       await page.waitForTimeout(900);
       const overlayOpen = await page.evaluate(() => {
         const overlay = document.querySelector("[data-testid='mobile-menu']");
@@ -240,8 +259,47 @@ try {
       if (!overlayOpen) {
         throw new Error(`390px ${viewport.route} 移动菜单无法打开`);
       }
-      await page.locator('button[aria-label="关闭导航菜单"]').click();
+
+      await page.keyboard.press("Shift+Tab");
+      const shiftTabStayedInMenu = await page.evaluate(() => {
+        const activeElement = document.activeElement;
+        return (
+          activeElement?.closest("[data-testid='mobile-menu']") !== null &&
+          activeElement?.textContent?.trim() === "联系我"
+        );
+      });
+      if (!shiftTabStayedInMenu) {
+        throw new Error(`390px ${viewport.route} 移动菜单反向焦点循环失败`);
+      }
+
+      await page.keyboard.press("Tab");
+      const tabReturnedToCloseButton = await page.evaluate(
+        () =>
+          document.activeElement?.getAttribute("aria-label") === "关闭导航菜单",
+      );
+      if (!tabReturnedToCloseButton) {
+        throw new Error(`390px ${viewport.route} 移动菜单正向焦点循环失败`);
+      }
+
+      await page.keyboard.press("Escape");
       await page.waitForTimeout(600);
+      const keyboardCloseState = await page.evaluate(() => {
+        const overlay = document.querySelector("[data-testid='mobile-menu']");
+        const activeElement = document.activeElement;
+        return {
+          hidden: overlay?.getAttribute("aria-hidden") === "true",
+          inert: overlay instanceof HTMLElement && overlay.inert,
+          focusReturned:
+            activeElement?.getAttribute("aria-label") === "打开导航菜单",
+        };
+      });
+      if (
+        !keyboardCloseState.hidden ||
+        !keyboardCloseState.inert ||
+        !keyboardCloseState.focusReturned
+      ) {
+        throw new Error(`390px ${viewport.route} Escape 关闭或焦点返回失败`);
+      }
     }
     if (viewport.viewportName === "1440" && viewport.route === "/") {
       await page.evaluate(() => window.scrollTo(0, window.innerHeight));

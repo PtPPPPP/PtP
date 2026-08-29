@@ -1,47 +1,53 @@
 const fallbackSiteUrl = "https://example.com";
 const localHostnames = new Set(["localhost", "127.0.0.1", "0.0.0.0"]);
+const placeholderDomains = ["example.com", "example.org", "example.net"];
 
 export const siteConfig = {
   defaultOgImage: "/opengraph-image",
   themeColor: "#f5f7fa",
 } as const;
 
-let hasWarnedAboutProductionUrl = false;
-
-function warnAboutProductionUrl(reason: string): void {
-  if (hasWarnedAboutProductionUrl) return;
-  hasWarnedAboutProductionUrl = true;
-  console.warn(
-    `[site] ${reason}。当前 canonical、Open Graph、JSON-LD 与 sitemap 使用 ${fallbackSiteUrl} 占位；部署前必须配置 NEXT_PUBLIC_SITE_URL。`,
+function isInvalidProductionHostname(hostname: string): boolean {
+  return (
+    localHostnames.has(hostname) ||
+    placeholderDomains.some(
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+    )
   );
 }
 
 export function getSiteUrl(): URL {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
+  if (process.env.NODE_ENV === "production" && !configuredUrl) {
+    throw new Error(
+      "生产构建必须配置 NEXT_PUBLIC_SITE_URL，不能使用 example.com 占位域名。",
+    );
+  }
+
+  let siteUrl: URL;
   try {
-    const siteUrl = new URL(configuredUrl ?? fallbackSiteUrl);
-
-    if (process.env.NODE_ENV === "production") {
-      if (!configuredUrl) {
-        warnAboutProductionUrl("生产环境缺少 NEXT_PUBLIC_SITE_URL");
-        return new URL(fallbackSiteUrl);
-      }
-
-      if (localHostnames.has(siteUrl.hostname)) {
-        warnAboutProductionUrl(
-          `生产环境的 NEXT_PUBLIC_SITE_URL 仍指向 ${siteUrl.origin}`,
-        );
-        return new URL(fallbackSiteUrl);
-      }
-    }
-
-    return siteUrl;
+    siteUrl = new URL(configuredUrl || fallbackSiteUrl);
   } catch {
     throw new Error(
       `NEXT_PUBLIC_SITE_URL 必须是完整 URL，当前值为：${configuredUrl}`,
     );
   }
+
+  if (process.env.NODE_ENV === "production") {
+    if (siteUrl.protocol !== "https:") {
+      throw new Error(
+        `生产环境的 NEXT_PUBLIC_SITE_URL 必须使用 HTTPS，当前值为：${siteUrl.origin}`,
+      );
+    }
+    if (isInvalidProductionHostname(siteUrl.hostname)) {
+      throw new Error(
+        `生产环境的 NEXT_PUBLIC_SITE_URL 不能使用占位或本机地址：${siteUrl.origin}`,
+      );
+    }
+  }
+
+  return siteUrl;
 }
 
 export function absoluteUrl(path: string): string {
