@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getProjectStatusLabel } from "@/components/status-badge";
+import { isInternalHref } from "@/lib/link";
 import type { ProjectListItem } from "@/types/content";
 
 export function ProjectCard({
@@ -44,14 +45,20 @@ export function ProjectCard({
             查看项目 <span aria-hidden="true">→</span>
           </Link>
           {project.demo ? (
-            <a
-              className="text-link"
-              href={project.demo}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              在线体验 <span aria-hidden="true">↗</span>
-            </a>
+            isInternalHref(project.demo) ? (
+              <Link className="text-link" href={project.demo}>
+                在线体验 <span aria-hidden="true">→</span>
+              </Link>
+            ) : (
+              <a
+                className="text-link"
+                href={project.demo}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                在线体验 <span aria-hidden="true">↗</span>
+              </a>
+            )
           ) : null}
         </div>
       </div>

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Geist } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SiteNav } from "@/components/site-nav";
@@ -6,6 +7,14 @@ import { profile } from "@/data/profile";
 import { createPageMetadata } from "@/lib/metadata";
 import { absoluteUrl, getSiteUrl } from "@/lib/site";
 import "./globals.css";
+
+// 构建时自托管 Geist（不再从 fonts.googleapis.com 拉取，大陆访客不再被外链阻塞）。
+// 中文回退栈仍由 globals.css 的 --font-sans 提供，Geist 只覆盖拉丁字形。
+const geist = Geist({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-geist-font",
+});
 
 export const metadata: Metadata = {
   metadataBase: getSiteUrl(),
@@ -47,19 +56,8 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" className={geist.variable}>
       <body>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
-        />
         <a className="skip-link" href="#main-content">
           跳到主要内容
         </a>

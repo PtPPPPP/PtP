@@ -4,7 +4,7 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 
 @theme {
-  --font-geist: "Geist", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-geist: var(--font-geist-font), "PingFang SC", "Microsoft YaHei", sans-serif;
   /* 供 Tailwind 工具类使用（text-ink / bg-paper / border-hairline 等），
      与 :root 的设计 token 保持同值 */
   --color-ink: #101114;
@@ -47,10 +47,10 @@
   --color-code: #0b0f16;
   --color-code-border: #2b3648;
 
-  /* Typography — 全站唯一字体体系 */
+  /* Typography — 全站唯一字体体系（Geist 由 next/font 构建时自托管） */
   --font-sans:
-    "Geist", "Inter", "SF Pro Display", "PingFang SC", "Microsoft YaHei",
-    "Noto Sans CJK SC", Arial, sans-serif;
+    var(--font-geist-font), "Inter", "SF Pro Display", "PingFang SC",
+    "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif;
   --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --text-display: clamp(3.25rem, 6vw, 4rem);
   --text-h1: clamp(2.5rem, 4.5vw, 3.25rem);

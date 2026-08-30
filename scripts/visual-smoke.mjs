@@ -301,6 +301,43 @@ try {
         throw new Error(`390px ${viewport.route} Escape 关闭或焦点返回失败`);
       }
     }
+    if (viewport.viewportName === "390" && viewport.route === "/projects") {
+      const searchInput = page.getByRole("searchbox", { name: "搜索项目" });
+      await searchInput.fill("FastAPI");
+      await page.waitForTimeout(100);
+      if (new URL(page.url()).searchParams.get("q") !== "FastAPI") {
+        throw new Error("项目筛选没有同步到 URL");
+      }
+
+      await page
+        .getByRole("link", { name: "Embodied Training Platform" })
+        .click();
+      await page.waitForURL("**/projects/embodied-training-platform");
+      await page.goBack();
+      await page.waitForURL(
+        (url) =>
+          url.pathname === "/projects" &&
+          url.searchParams.get("q") === "FastAPI",
+      );
+      if ((await searchInput.inputValue()) !== "FastAPI") {
+        throw new Error("从项目详情返回后没有恢复筛选状态");
+      }
+      await searchInput.fill("");
+    }
+    if (viewport.viewportName === "390" && viewport.route === "/blog") {
+      const searchInput = page.getByRole("searchbox", { name: "搜索文章" });
+      await searchInput.fill("MVP");
+      await page.waitForTimeout(100);
+      const resultCount = page.locator(".filter-count");
+      if (
+        (await resultCount.getAttribute("aria-live")) !== "polite" ||
+        !(await resultCount.innerText()).startsWith("显示 1 /") ||
+        new URL(page.url()).searchParams.get("q") !== "MVP"
+      ) {
+        throw new Error("博客筛选结果反馈或 URL 同步失败");
+      }
+      await searchInput.fill("");
+    }
     if (viewport.viewportName === "1440" && viewport.route === "/") {
       await page.evaluate(() => window.scrollTo(0, window.innerHeight));
       await page.waitForTimeout(500);

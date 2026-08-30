@@ -11,6 +11,7 @@ import {
 } from "@/components/status-badge";
 import { TechTag } from "@/components/tech-tag";
 import { getProjectBySlug, projects } from "@/data/projects";
+import { isInternalHref } from "@/lib/link";
 import { absoluteUrl } from "@/lib/site";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -91,8 +92,12 @@ export default async function ProjectDetailPage({
               </Button>
             ) : null}
             {project.demo ? (
-              <Button href={project.demo} external variant="primary">
-                在线演示 <span aria-hidden="true">↗</span>
+              <Button
+                href={project.demo}
+                external={!isInternalHref(project.demo)}
+                variant="primary"
+              >
+                在线演示 <span aria-hidden="true">{isInternalHref(project.demo) ? "→" : "↗"}</span>
               </Button>
             ) : null}
           </div> : null}

@@ -19,6 +19,9 @@ describe("项目筛选", () => {
     expect(
       screen.queryByRole("heading", { name: "SIGNAL-HUNT" }),
     ).not.toBeInTheDocument();
+    expect(new URLSearchParams(window.location.search).get("q")).toBe(
+      "FastAPI",
+    );
   });
 
   it("可以按分类筛选项目", () => {
@@ -34,5 +37,26 @@ describe("项目筛选", () => {
     expect(
       screen.queryByRole("heading", { name: "Finding Job" }),
     ).not.toBeInTheDocument();
+    expect(new URLSearchParams(window.location.search).get("category")).toBe(
+      "AIoT 与自动化",
+    );
+  });
+
+  it("从 URL 恢复筛选状态", () => {
+    window.history.replaceState(
+      null,
+      "",
+      "/projects?q=FastAPI&category=具身智能与机器人",
+    );
+
+    render(<ProjectFilter projects={projectItems} />);
+
+    expect(screen.getByLabelText("搜索项目")).toHaveValue("FastAPI");
+    expect(
+      screen.getByRole("button", { name: "具身智能与机器人" }),
+    ).toHaveAttribute("aria-pressed", "true");
+    expect(
+      screen.getByRole("heading", { name: "Embodied Training Platform" }),
+    ).toBeInTheDocument();
   });
 });

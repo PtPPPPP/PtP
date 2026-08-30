@@ -1,16 +1,18 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { EmptyState } from "@/components/empty-state";
 import { FilterControls } from "@/components/filter-controls";
 import { ProjectGrid } from "@/components/project-grid";
 import { projectCategories } from "@/data/projects";
 import { matchesKeywordQuery } from "@/lib/filter";
+import { useFilterSearchParams } from "@/lib/filter-search-params";
 import type { ProjectCategory, ProjectListItem } from "@/types/content";
 
 export function ProjectFilter({ projects }: { projects: ProjectListItem[] }) {
-  const [query, setQuery] = useState("");
-  const [category, setCategory] = useState<"全部" | ProjectCategory>("全部");
+  const { query, category, setQuery, setCategory } = useFilterSearchParams<
+    "全部" | ProjectCategory
+  >(projectCategories, "全部");
 
   const filteredProjects = useMemo(() => {
     return projects.filter((project) => {

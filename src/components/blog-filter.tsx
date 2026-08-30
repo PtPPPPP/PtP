@@ -1,16 +1,22 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { BlogList } from "@/components/blog-list";
 import { EmptyState } from "@/components/empty-state";
 import { FilterControls } from "@/components/filter-controls";
 import { matchesKeywordQuery } from "@/lib/filter";
+import { useFilterSearchParams } from "@/lib/filter-search-params";
 import type { BlogListItem } from "@/types/content";
 
 export function BlogFilter({ posts }: { posts: BlogListItem[] }) {
-  const categories = ["全部", ...new Set(posts.map((post) => post.category))];
-  const [category, setCategory] = useState("全部");
-  const [query, setQuery] = useState("");
+  const categories = useMemo(
+    () => ["全部", ...new Set(posts.map((post) => post.category))],
+    [posts],
+  );
+  const { query, category, setQuery, setCategory } = useFilterSearchParams(
+    categories,
+    "全部",
+  );
 
   const filteredPosts = useMemo(() => {
     return posts.filter((post) => {
@@ -34,7 +40,11 @@ export function BlogFilter({ posts }: { posts: BlogListItem[] }) {
         categories={categories}
         category={category}
         onCategoryChange={setCategory}
-      />
+      >
+        <p className="filter-count" aria-live="polite">
+          显示 {filteredPosts.length} / {posts.length} 篇文章
+        </p>
+      </FilterControls>
       {filteredPosts.length ? (
         <BlogList posts={filteredPosts} />
       ) : (
