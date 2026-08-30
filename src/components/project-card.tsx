@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getProjectStatusLabel } from "@/components/status-badge";
 import { isInternalHref } from "@/lib/link";
+import { isPendingValue } from "@/lib/pending";
 import type { ProjectListItem } from "@/types/content";
 
 export function ProjectCard({
@@ -13,9 +14,9 @@ export function ProjectCard({
   variant?: "featured" | "full";
 }) {
   const publicTechnologies = project.technologies.filter(
-    (technology) => !technology.includes("待补充"),
+    (technology) => !isPendingValue(technology),
   );
-  const hasYear = !project.year.includes("待补充");
+  const hasYear = !isPendingValue(project.year);
   const meta = [
     project.category,
     getProjectStatusLabel(project.status),

@@ -1,8 +1,9 @@
 import { contactLinks } from "@/data/contact";
+import { isPendingValue } from "@/lib/pending";
 
 export function ContactLinks() {
   const availableLinks = contactLinks.filter(
-    (item) => item.value !== "待补充",
+    (item) => !isPendingValue(item.value),
   );
 
   return (

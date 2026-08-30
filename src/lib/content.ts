@@ -1,5 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
+import GithubSlugger from "github-slugger";
 import matter from "gray-matter";
 import type {
   BlogFrontmatter,
@@ -11,6 +12,10 @@ const blogDirectory = path.join(process.cwd(), "content", "blog");
 
 function isStringArray(value: unknown): value is string[] {
   return Array.isArray(value) && value.every((item) => typeof item === "string");
+}
+
+function isIsoDateString(value: string): boolean {
+  return /^\d{4}-\d{2}-\d{2}$/.test(value);
 }
 
 function validateFrontmatter(
@@ -43,6 +48,12 @@ function validateFrontmatter(
     throw new Error(`${filename} 的 draft、sample 与 published 必须是布尔值`);
   }
 
+  for (const key of ["date", "updated"] as const) {
+    if (!isIsoDateString(value[key] as string)) {
+      throw new Error(`${filename} 的 ${key} 必须是 YYYY-MM-DD 格式`);
+    }
+  }
+
   return {
     title: value.title as string,
     description: value.description as string,
@@ -60,29 +71,28 @@ function validateFrontmatter(
   };
 }
 
-function slugifyHeading(text: string): string {
-  return text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\p{Letter}\p{Number}\s-]/gu, "")
-    .replace(/\s+/g, "-");
-}
-
 function getHeadings(content: string): BlogPost["headings"] {
-  return content
-    .split("\n")
-    .map((line) => {
-      const match = /^(#{2,3})\s+(.+)$/.exec(line);
-      if (!match) return null;
-      return {
-        level: match[1].length,
-        text: match[2].trim(),
-        id: slugifyHeading(match[2]),
-      };
-    })
-    .filter((heading): heading is BlogPost["headings"][number] =>
-      Boolean(heading),
-    );
+  // 与页面渲染端 rehype-slug（github-slugger）使用同一套锚点算法，
+  // 保证目录链接 id 与实际标题 id 一致（含重复标题的 -1 后缀）；
+  // fenced code block 里的 # 注释不能当成标题。
+  const slugger = new GithubSlugger();
+  const headings: BlogPost["headings"] = [];
+  let inFence = false;
+
+  for (const line of content.split("\n")) {
+    if (/^\s*(```|~~~)/.test(line)) {
+      inFence = !inFence;
+      continue;
+    }
+    if (inFence) continue;
+
+    const match = /^(#{2,3})\s+(.+)$/.exec(line);
+    if (!match) continue;
+    const text = match[2].trim();
+    headings.push({ level: match[1].length, text, id: slugger.slug(text) });
+  }
+
+  return headings;
 }
 
 function getReadingTime(content: string): string {
@@ -95,13 +105,19 @@ function getReadingTime(content: string): string {
   return `${minutes} 分钟`;
 }
 
-export function getAllBlogPosts(options?: {
-  includeDrafts?: boolean;
-  includeUnpublished?: boolean;
-}): BlogPost[] {
-  if (!fs.existsSync(blogDirectory)) return [];
+// 模块级缓存：构建期 generateStaticParams / generateMetadata / page 会重复调用，
+// 避免每次调用都重读目录并重新解析所有 Markdown。
+let cachedAllPosts: BlogPost[] | null = null;
 
-  return fs
+function readAllBlogPosts(): BlogPost[] {
+  if (cachedAllPosts) return cachedAllPosts;
+
+  if (!fs.existsSync(blogDirectory)) {
+    cachedAllPosts = [];
+    return cachedAllPosts;
+  }
+
+  cachedAllPosts = fs
     .readdirSync(blogDirectory)
     .filter((filename) => filename.endsWith(".md"))
     .map((filename) => {
@@ -118,14 +134,22 @@ export function getAllBlogPosts(options?: {
         headings: getHeadings(parsed.content),
       };
     })
-    .filter((post) => {
-      const includeUnpublished =
-        options?.includeUnpublished ?? process.env.NODE_ENV !== "production";
-      if (options?.includeDrafts) return true;
-      if (post.draft) return false;
-      return includeUnpublished || (post.published && !post.sample);
-    })
     .sort((a, b) => b.date.localeCompare(a.date));
+
+  return cachedAllPosts;
+}
+
+export function getAllBlogPosts(options?: {
+  includeDrafts?: boolean;
+  includeUnpublished?: boolean;
+}): BlogPost[] {
+  return readAllBlogPosts().filter((post) => {
+    const includeUnpublished =
+      options?.includeUnpublished ?? process.env.NODE_ENV !== "production";
+    if (options?.includeDrafts) return true;
+    if (post.draft) return false;
+    return includeUnpublished || (post.published && !post.sample);
+  });
 }
 
 export function getBlogPostBySlug(

@@ -12,6 +12,7 @@ import {
 import { TechTag } from "@/components/tech-tag";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { isInternalHref } from "@/lib/link";
+import { isPendingValue } from "@/lib/pending";
 import { absoluteUrl } from "@/lib/site";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -51,7 +52,7 @@ export default async function ProjectDetailPage({
   if (!project) notFound();
 
   const publicTechnologies = project.technologies.filter(
-    (technology) => !technology.includes("待补充"),
+    (technology) => !isPendingValue(technology),
   );
 
   const structuredData = {
@@ -76,7 +77,7 @@ export default async function ProjectDetailPage({
           <div className="case-study__meta">
             <span>{project.category}</span>
             <StatusBadge status={project.status} />
-            {project.year.includes("待补充") ? null : <span>{project.year}</span>}
+            {isPendingValue(project.year) ? null : <span>{project.year}</span>}
           </div>
           <h1>{project.title}</h1>
           <p>{project.subtitle}</p>
