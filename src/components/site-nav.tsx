@@ -118,7 +118,7 @@ export function SiteNav() {
           <button
             type="button"
             ref={menuButtonRef}
-            className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+            className="relative z-50 flex h-11 w-11 items-center justify-center md:hidden"
             aria-expanded={mobileMenuOpen}
             aria-controls="mobile-navigation"
             aria-label={mobileMenuOpen ? "关闭导航菜单" : "打开导航菜单"}

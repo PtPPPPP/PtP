@@ -51,6 +51,9 @@ export default async function ProjectDetailPage({
     (technology) => !isPendingValue(technology),
   );
 
+  const evidenceImages =
+    project.evidenceReady && project.gallery?.length ? project.gallery : [];
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -105,23 +108,29 @@ export default async function ProjectDetailPage({
               ) : null}
             </div>
           ) : null}
-          <p className="case-study__technologies">{project.tags.join(" / ")}</p>
+          <p className="case-study__technologies">
+            {project.tags.map((tag) => (
+              <span key={tag}>{tag}</span>
+            ))}
+          </p>
           {publicTechnologies.length ? (
             <p className="case-study__technologies">
-              {publicTechnologies.join(" / ")}
+              {publicTechnologies.map((technology) => (
+                <span key={technology}>{technology}</span>
+              ))}
             </p>
           ) : null}
         </header>
 
         <div className="case-study__body">
           <article className="case-study__content">
-            <CaseSection title="项目概览">
+            <CaseSection number={1} title="项目概览">
               <p>{project.background}</p>
             </CaseSection>
-            <CaseSection title="要解决的问题">
+            <CaseSection number={2} title="要解决的问题">
               <p>{project.problem}</p>
             </CaseSection>
-            <CaseSection title="方案与实现思路">
+            <CaseSection number={3} title="方案与实现思路">
               <div className="challenge-list">
                 {project.challenges.map((challenge) => (
                   <div key={challenge.problem}>
@@ -137,14 +146,14 @@ export default async function ProjectDetailPage({
                 ))}
               </div>
             </CaseSection>
-            <CaseSection title="核心功能">
+            <CaseSection number={4} title="核心功能">
               <ul className="feature-list">
                 {project.features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection title="系统架构与流程">
+            <CaseSection number={5} title="系统架构与流程">
               <ol className="architecture-list">
                 {project.architecture.map((step, index) => (
                   <li key={step}>
@@ -154,24 +163,24 @@ export default async function ProjectDetailPage({
                 ))}
               </ol>
             </CaseSection>
-            <CaseSection title="我的工作">
+            <CaseSection number={6} title="我的工作">
               <ul>
                 {project.responsibilities.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection title="项目亮点">
+            <CaseSection number={7} title="项目亮点">
               <ul>
                 {project.highlights.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </CaseSection>
-            {project.evidenceReady && project.gallery?.length ? (
-              <CaseSection title="项目证据">
+            {evidenceImages.length ? (
+              <CaseSection number={8} title="项目证据">
                 <div className="case-gallery">
-                  {project.gallery.map((image, index) => (
+                  {evidenceImages.map((image, index) => (
                     <figure key={image}>
                       <Image
                         src={image}
@@ -188,14 +197,20 @@ export default async function ProjectDetailPage({
                 </div>
               </CaseSection>
             ) : null}
-            <CaseSection title="当前限制">
+            <CaseSection
+              number={evidenceImages.length ? 9 : 8}
+              title="当前限制"
+            >
               <ul>
                 {project.limitations.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection title="后续计划">
+            <CaseSection
+              number={evidenceImages.length ? 10 : 9}
+              title="后续计划"
+            >
               <ul>
                 {project.nextSteps.map((item) => (
                   <li key={item}>{item}</li>
@@ -210,15 +225,18 @@ export default async function ProjectDetailPage({
 }
 
 function CaseSection({
+  number,
   title,
   children,
 }: {
+  number: number;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <section className="case-section">
       <div className="case-section__title">
+        <span aria-hidden="true">{String(number).padStart(2, "0")}</span>
         <h2>{title}</h2>
       </div>
       <div className="case-section__content">{children}</div>

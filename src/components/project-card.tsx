@@ -24,24 +24,27 @@ export function ProjectCard({
   ].filter(Boolean);
 
   return (
-    <article
-      className={`project-card${variant === "featured" && number === 1 ? " project-card--lead" : ""}`}
-    >
+    <article className={`project-card project-card--${variant}`}>
       {number ? (
         <span className="project-card__number" aria-hidden="true">
           {String(number).padStart(2, "0")}
         </span>
       ) : null}
       <div className="project-card__body">
+        <h3>
+          <Link href={`/projects/${project.slug}`}>
+            {project.title}
+            <span className="project-card__arrow" aria-hidden="true">
+              →
+            </span>
+          </Link>
+        </h3>
+        <p className="project-card__description">{project.description}</p>
         <p className="project-card__meta">
           {meta.map((item) => (
             <span key={item}>{item}</span>
           ))}
         </p>
-        <h3>
-          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
-        </h3>
-        <p className="project-card__description">{project.description}</p>
         {publicTechnologies.length ? (
           <div className="project-card__stack">
             {publicTechnologies.slice(0, 6).map((technology) => (

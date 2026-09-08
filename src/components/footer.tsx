@@ -7,10 +7,6 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <Container>
-        <div className="site-footer__signature">
-          <Link href="/">{profile.englishName}</Link>
-          <span>作品、实践与学习记录。</span>
-        </div>
         <div className="site-footer__bottom">
           <p>
             © {new Date().getFullYear()} {profile.name}
