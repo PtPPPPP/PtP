@@ -13,9 +13,3 @@ const statusLabels: Record<ProjectStatus, string> = {
 export function getProjectStatusLabel(status: ProjectStatus): string {
   return statusLabels[status];
 }
-
-export function StatusBadge({ status }: { status: ProjectStatus }) {
-  return (
-    <span className="status-badge">{getProjectStatusLabel(status)}</span>
-  );
-}

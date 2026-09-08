@@ -17,9 +17,9 @@ export default function BlogPage() {
   return (
     <Container className="page-shell">
       <PageIntro
-        eyebrow="Blog"
-        title="把思考过程写下来。"
-        description="文章用于记录项目取舍、技术学习和实践方法。未正式发布的样例与草稿只在开发环境预览。"
+        title="学习记录"
+        englishTitle="Notes"
+        description="记录项目中的技术选择、实践过程与学习笔记。"
       />
       <BlogFilter posts={posts} />
     </Container>

@@ -11,10 +11,7 @@ import { Container } from "@/components/container";
 import { JsonLd } from "@/components/json-ld";
 import { ReadingProgress } from "@/components/reading-progress";
 import { TableOfContents } from "@/components/table-of-contents";
-import {
-  getAllBlogPosts,
-  getBlogPostBySlug,
-} from "@/lib/content";
+import { getAllBlogPosts, getBlogPostBySlug } from "@/lib/content";
 import { absoluteUrl } from "@/lib/site";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -86,7 +83,9 @@ export default async function BlogPostPage({
           <div className="article-header__meta">
             <span>{post.category}</span>
             <time dateTime={post.date}>{post.date}</time>
-            <span>更新于 {post.updated}</span>
+            {post.updated !== post.date ? (
+              <span>更新于 {post.updated}</span>
+            ) : null}
             <span>{post.readingTime}</span>
             {post.sample ? <strong>示例文章</strong> : null}
           </div>

@@ -5,13 +5,9 @@ import { BackLink } from "@/components/back-link";
 import { Button } from "@/components/button";
 import { Container } from "@/components/container";
 import { JsonLd } from "@/components/json-ld";
-import {
-  getProjectStatusLabel,
-  StatusBadge,
-} from "@/components/status-badge";
-import { TechTag } from "@/components/tech-tag";
 import { getProjectBySlug, projects } from "@/data/projects";
 import { isInternalHref } from "@/lib/link";
+import { getProjectStatusLabel } from "@/lib/project-status";
 import { isPendingValue } from "@/lib/pending";
 import { absoluteUrl } from "@/lib/site";
 import { createPageMetadata } from "@/lib/metadata";
@@ -76,81 +72,79 @@ export default async function ProjectDetailPage({
         <header className="case-study__header">
           <div className="case-study__meta">
             <span>{project.category}</span>
-            <StatusBadge status={project.status} />
+            <span className="status-badge">
+              {getProjectStatusLabel(project.status)}
+            </span>
             {isPendingValue(project.year) ? null : <span>{project.year}</span>}
           </div>
           <h1>{project.title}</h1>
           <p>{project.subtitle}</p>
-          {project.github || project.demo || project.admin ? <div className="case-study__links">
-            {project.github ? (
-              <Button href={project.github} external variant="secondary">
-                查看源码 <span aria-hidden="true">↗</span>
-              </Button>
-            ) : null}
-            {project.admin ? (
-              <Button href={project.admin} external variant="secondary">
-                管理后台 <span aria-hidden="true">↗</span>
-              </Button>
-            ) : null}
-            {project.demo ? (
-              <Button
-                href={project.demo}
-                external={!isInternalHref(project.demo)}
-                variant="primary"
-              >
-                在线演示 <span aria-hidden="true">{isInternalHref(project.demo) ? "→" : "↗"}</span>
-              </Button>
-            ) : null}
-          </div> : null}
+          {project.github || project.demo || project.admin ? (
+            <div className="case-study__links">
+              {project.github ? (
+                <Button href={project.github} external variant="secondary">
+                  查看源码 <span aria-hidden="true">↗</span>
+                </Button>
+              ) : null}
+              {project.admin ? (
+                <Button href={project.admin} external variant="secondary">
+                  管理后台 <span aria-hidden="true">↗</span>
+                </Button>
+              ) : null}
+              {project.demo ? (
+                <Button
+                  href={project.demo}
+                  external={!isInternalHref(project.demo)}
+                  variant="primary"
+                >
+                  在线演示{" "}
+                  <span aria-hidden="true">
+                    {isInternalHref(project.demo) ? "→" : "↗"}
+                  </span>
+                </Button>
+              ) : null}
+            </div>
+          ) : null}
+          <p className="case-study__technologies">{project.tags.join(" / ")}</p>
+          {publicTechnologies.length ? (
+            <p className="case-study__technologies">
+              {publicTechnologies.join(" / ")}
+            </p>
+          ) : null}
         </header>
 
         <div className="case-study__body">
-          <aside className="case-study__rail">
-            <div>
-              <span>状态</span>
-              <strong>{getProjectStatusLabel(project.status)}</strong>
-            </div>
-            <div>
-              <span>项目类型</span>
-              {project.tags.map((tag) => (
-                <p key={tag}>{tag}</p>
-              ))}
-            </div>
-            {publicTechnologies.length ? <div>
-              <span>技术栈</span>
-              <div className="tag-row">
-                {publicTechnologies.map((technology) => (
-                  <TechTag key={technology}>{technology}</TechTag>
-                ))}
-              </div>
-            </div> : null}
-          </aside>
-
           <article className="case-study__content">
-            <CaseSection index="01" title="项目概览">
+            <CaseSection title="项目概览">
               <p>{project.background}</p>
             </CaseSection>
-            <CaseSection index="02" title="要解决的问题">
+            <CaseSection title="要解决的问题">
               <p>{project.problem}</p>
             </CaseSection>
-            <CaseSection index="03" title="方案与实现思路">
+            <CaseSection title="方案与实现思路">
               <div className="challenge-list">
                 {project.challenges.map((challenge) => (
                   <div key={challenge.problem}>
-                    <p><strong>问题</strong>{challenge.problem}</p>
-                    <p><strong>处理</strong>{challenge.solution}</p>
+                    <p>
+                      <strong>问题</strong>
+                      {challenge.problem}
+                    </p>
+                    <p>
+                      <strong>处理</strong>
+                      {challenge.solution}
+                    </p>
                   </div>
                 ))}
               </div>
             </CaseSection>
-            <CaseSection index="04" title="核心功能">
+            <CaseSection title="核心功能">
               <ul className="feature-list">
                 {project.features.map((feature) => (
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection index="05" title="系统架构与流程">
+            <CaseSection title="系统架构与流程">
               <ol className="architecture-list">
                 {project.architecture.map((step, index) => (
                   <li key={step}>
@@ -160,20 +154,22 @@ export default async function ProjectDetailPage({
                 ))}
               </ol>
             </CaseSection>
-            <CaseSection index="06" title="我的工作">
+            <CaseSection title="我的工作">
               <ul>
                 {project.responsibilities.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection index="07" title="项目亮点">
+            <CaseSection title="项目亮点">
               <ul>
-                {project.highlights.map((item) => <li key={item}>{item}</li>)}
+                {project.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
               </ul>
             </CaseSection>
             {project.evidenceReady && project.gallery?.length ? (
-              <CaseSection index="08" title="项目证据">
+              <CaseSection title="项目证据">
                 <div className="case-gallery">
                   {project.gallery.map((image, index) => (
                     <figure key={image}>
@@ -184,20 +180,22 @@ export default async function ProjectDetailPage({
                         height={1000}
                         sizes="(max-width: 768px) calc(100vw - 2rem), 680px"
                       />
-                      <figcaption>项目截图 {String(index + 1).padStart(2, "0")}</figcaption>
+                      <figcaption>
+                        项目截图 {String(index + 1).padStart(2, "0")}
+                      </figcaption>
                     </figure>
                   ))}
                 </div>
               </CaseSection>
             ) : null}
-            <CaseSection index="09" title="当前限制">
+            <CaseSection title="当前限制">
               <ul>
                 {project.limitations.map((item) => (
                   <li key={item}>{item}</li>
                 ))}
               </ul>
             </CaseSection>
-            <CaseSection index="10" title="后续计划">
+            <CaseSection title="后续计划">
               <ul>
                 {project.nextSteps.map((item) => (
                   <li key={item}>{item}</li>
@@ -212,18 +210,15 @@ export default async function ProjectDetailPage({
 }
 
 function CaseSection({
-  index,
   title,
   children,
 }: {
-  index: string;
   title: string;
   children: React.ReactNode;
 }) {
   return (
     <section className="case-section">
       <div className="case-section__title">
-        <span>{index}</span>
         <h2>{title}</h2>
       </div>
       <div className="case-section__content">{children}</div>

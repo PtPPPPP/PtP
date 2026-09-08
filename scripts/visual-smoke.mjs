@@ -69,26 +69,6 @@ async function waitForStableVisualState(page) {
     document.documentElement.style.scrollBehavior = "auto";
     window.scrollTo(0, 0);
   });
-
-  const hero = page.locator(".hero-display");
-  if (await hero.count()) {
-    await page.waitForFunction(() => {
-      const heading = document.querySelector(".hero-display");
-      const lead = document.querySelector(".hero-lead");
-      const cta = document.querySelector(".hero-lead + .button");
-      const video = document.querySelector("video");
-      return (
-        heading &&
-        lead &&
-        cta &&
-        Number.parseFloat(getComputedStyle(heading).opacity) >= 0.99 &&
-        Number.parseFloat(getComputedStyle(lead).opacity) >= 0.99 &&
-        Number.parseFloat(getComputedStyle(cta).opacity) >= 0.99 &&
-        video instanceof HTMLVideoElement &&
-        video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA
-      );
-    });
-  }
 }
 
 async function findCjkHeadingWrapProblems(page) {
@@ -203,6 +183,34 @@ try {
       timeout: 60000,
     });
     await waitForStableVisualState(page);
+    if (viewport.route === "/") {
+      const home = await page.evaluate(() => {
+        const intro = document.querySelector(".home-intro");
+        const work = document.getElementById("selected-work");
+        const cta = intro?.querySelector("a[href='#selected-work']");
+        const mainNav = document.querySelector("nav[aria-label='主导航']");
+        return {
+          hasIdentity: intro?.querySelector("h1")?.textContent === "黄柏霖",
+          hasWork: Boolean(cta && work?.querySelector(".project-card")),
+          workTop: work?.getBoundingClientRect().top,
+          hasVideo: Boolean(document.querySelector("video")),
+          navPosition: mainNav ? getComputedStyle(mainNav).position : null,
+        };
+      });
+      if (
+        !home.hasIdentity ||
+        !home.hasWork ||
+        home.hasVideo ||
+        home.navPosition !== "relative"
+      ) {
+        throw new Error(
+          "首页身份、作品入口或共享导航异常：" + JSON.stringify(home),
+        );
+      }
+      if (home.workTop == null || home.workTop >= viewport.height) {
+        throw new Error(viewport.viewportName + "px 首页首屏未露出作品区域");
+      }
+    }
     const layout = await page.evaluate(() => ({
       clientWidth: document.documentElement.clientWidth,
       scrollWidth: document.documentElement.scrollWidth,
@@ -225,7 +233,7 @@ try {
         outputDirectory,
         `${viewport.routeName}-${viewport.viewportName}.png`,
       ),
-      fullPage: false,
+      fullPage: true,
     });
     if (
       viewport.viewportName === "390" &&

@@ -6,8 +6,6 @@ type ButtonProps = {
   children: ReactNode;
   /** primary = 主要动作；secondary = 次级动作 */
   variant?: "primary" | "secondary";
-  /** inverse = 暗色场景（首页 Hero / overlay 导航）下的主按钮反白，规格与 default 一致 */
-  tone?: "default" | "inverse";
   /** 外链时新窗口打开 */
   external?: boolean;
   className?: string;
@@ -18,17 +16,11 @@ export function Button({
   href,
   children,
   variant = "primary",
-  tone = "default",
   external = false,
   className = "",
   onClick,
 }: ButtonProps) {
-  const classes = [
-    "button",
-    `button--${variant}`,
-    tone === "inverse" ? "button--inverse" : "",
-    className,
-  ]
+  const classes = ["button", `button--${variant}`, className]
     .filter(Boolean)
     .join(" ");
 

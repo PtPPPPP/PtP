@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SiteNav } from "@/components/site-nav";
 import { profile } from "@/data/profile";
 import { createPageMetadata } from "@/lib/metadata";
-import { absoluteUrl, getSiteUrl } from "@/lib/site";
+import { siteConfig, absoluteUrl, getSiteUrl } from "@/lib/site";
 import "./globals.css";
 
 // 构建时自托管 Geist（不再从 fonts.googleapis.com 拉取，大陆访客不再被外链阻塞）。
@@ -26,6 +26,10 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.svg",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: siteConfig.themeColor,
 };
 
 export default function RootLayout({

@@ -1,17 +1,32 @@
+import type { ReactNode } from "react";
+
 export function PageIntro({
-  eyebrow,
   title,
   description,
+  englishTitle,
+  children,
 }: {
-  eyebrow: string;
   title: string;
   description: string;
+  englishTitle?: string;
+  children?: ReactNode;
 }) {
   return (
     <header className="page-intro">
-      <p className="eyebrow">{eyebrow}</p>
-      <h1>{title}</h1>
-      <p className="page-intro__lead">{description}</p>
+      <div className="page-intro__body">
+        <div>
+          {englishTitle ? (
+            <p className="page-intro__english" lang="en">
+              {englishTitle}
+            </p>
+          ) : null}
+          <h1>{title}</h1>
+        </div>
+        <div className="page-intro__summary">
+          <p className="page-intro__lead">{description}</p>
+          {children}
+        </div>
+      </div>
     </header>
   );
 }

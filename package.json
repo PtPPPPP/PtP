@@ -16,7 +16,8 @@
     "test:watch": "vitest",
     "visual:check": "node scripts/visual-smoke.mjs",
     "deploy": "npm run build && wrangler deploy",
-    "deploy:preview": "wrangler dev"
+    "deploy:preview": "wrangler dev",
+    "audit:responsive": "node scripts/responsive-audit.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",

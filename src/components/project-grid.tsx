@@ -13,8 +13,8 @@ export function ProjectGrid({
       {projects.map((project, index) => (
         <ProjectCard
           project={project}
-          index={index}
           variant={variant}
+          number={index + 1}
           key={project.slug}
         />
       ))}

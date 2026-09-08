@@ -36,7 +36,7 @@ export function ReadingProgress() {
       aria-valuemax={100}
       aria-valuenow={Math.round(progress)}
     >
-      <span style={{ transform: `scaleX(${progress / 100})` }} />
+      <span style={{ width: `${progress}%` }} />
     </div>
   );
 }

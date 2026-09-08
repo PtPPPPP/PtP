@@ -11,10 +11,9 @@ const distDir = path.join(findingJobDir, "dist");
 const targetDir = path.resolve("out/finding-jobs");
 
 if (!fs.existsSync(findingJobDir)) {
-  console.warn(
-    `[sync-finding-jobs] 未找到相邻目录 ${findingJobDir}，跳过 finding-jobs 同步；/finding-jobs/ 路由将不可用。`,
+  throw new Error(
+    `[sync-finding-jobs] 未找到相邻目录 ${findingJobDir}。不能发布缺少 /finding-jobs/ 的个人网站。`,
   );
-  process.exit(0);
 }
 
 console.log("[sync-finding-jobs] 构建 finding_job ...");

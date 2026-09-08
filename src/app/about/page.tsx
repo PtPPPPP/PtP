@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ContactLinks } from "@/components/contact-links";
+import Link from "next/link";
 import { Container } from "@/components/container";
 import { PageIntro } from "@/components/page-intro";
 import { SkillMatrix } from "@/components/skill-matrix";
@@ -15,21 +15,18 @@ export const metadata: Metadata = createPageMetadata({
 const principles = [
   {
     index: "01",
-    title: "从真实问题开始",
-    description:
-      "先明确对象、场景和限制，再决定技术方案。一个可验证的小闭环，比没有边界的功能清单更有价值。",
+    title: "明确问题",
+    description: "先明确使用场景和限制，再选择技术方案。",
   },
   {
     index: "02",
-    title: "让系统可以解释",
-    description:
-      "不仅展示结果，也记录数据从哪里来、状态如何变化、哪些部分仍是模拟或待验证。",
+    title: "记录过程",
+    description: "记录数据来源、实现过程和仍待验证的部分。",
   },
   {
     index: "03",
-    title: "用完整交付检验学习",
-    description:
-      "把算法或想法放进可运行的项目，补齐界面、接口、测试、文档与部署，才能看到真正的工程问题。",
+    title: "完成交付",
+    description: "通过可运行的项目，练习界面、接口、测试与部署。",
   },
 ];
 
@@ -37,20 +34,19 @@ export default function AboutPage() {
   return (
     <Container className="page-shell about-page">
       <PageIntro
-        eyebrow="About"
-        title="在自动化与软件之间，建立自己的工程坐标。"
-        description={profile.introduction}
+        title="关于我"
+        englishTitle="About"
+        description={`${profile.role}。${profile.introduction}`}
       />
       <section className="about-statement">
-        <p className="eyebrow">Current direction</p>
-        <h2>{profile.goal}</h2>
+        <h2>当前方向</h2>
+        <p>{profile.goal}</p>
       </section>
       <section className="about-section">
-        <div className="about-section__label eyebrow">项目与学习方法</div>
+        <h2 className="about-section__label">项目与学习方法</h2>
         <div className="principle-list">
           {principles.map((principle) => (
             <article key={principle.index}>
-              <span>{principle.index}</span>
               <h3>{principle.title}</h3>
               <p>{principle.description}</p>
             </article>
@@ -58,13 +54,17 @@ export default function AboutPage() {
         </div>
       </section>
       <section className="about-section">
-        <div className="about-section__label eyebrow">技能与兴趣</div>
+        <h2 className="about-section__label">技能与方向</h2>
         <SkillMatrix />
       </section>
-      <section className="about-section">
-        <div className="about-section__label eyebrow">公开联系入口</div>
-        <ContactLinks />
-      </section>
+      <div className="section-action">
+        <Link className="text-link" href="/experience">
+          学习与经历 <span aria-hidden="true">→</span>
+        </Link>
+        <Link className="text-link" href="/contact">
+          联系我 <span aria-hidden="true">→</span>
+        </Link>
+      </div>
     </Container>
   );
 }

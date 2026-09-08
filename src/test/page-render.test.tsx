@@ -10,15 +10,24 @@ vi.mock("next/navigation", () => ({
 }));
 
 describe("关键页面渲染", () => {
-  it("首页渲染沉浸式 Hero 和精选项目", () => {
+  it("首页显示身份、精选项目和可到达的作品入口", () => {
     render(<HomePage />);
 
     expect(
-      screen.getByRole("heading", { name: /连接起来/ }),
+      screen.getByRole("heading", { level: 1, name: "黄柏霖" }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "查看我的作品" })).toHaveAttribute(
+      "href",
+      "#selected-work",
+    );
+    expect(screen.getByRole("region", { name: "精选项目" })).toHaveAttribute(
+      "id",
+      "selected-work",
+    );
     expect(
-      screen.getByRole("link", { name: "查看我的作品" }),
+      screen.getByText("北京信息科技大学自动化专业学生"),
     ).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "联系我" })).toBeInTheDocument();
     expect(
       screen.getByRole("link", {
         name: "AIoT 智慧温室种植系统原型",

@@ -7,9 +7,9 @@ export function Footer() {
   return (
     <footer className="site-footer">
       <Container>
-        <div className="site-footer__lead">
-          <p className="eyebrow">Contact</p>
-          <h2>继续学习，也继续把想法做成可以验证的东西。</h2>
+        <div className="site-footer__signature">
+          <Link href="/">{profile.englishName}</Link>
+          <span>作品、实践与学习记录。</span>
         </div>
         <div className="site-footer__bottom">
           <p>

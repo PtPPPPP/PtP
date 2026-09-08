@@ -8,9 +8,8 @@ export function ContactLinks() {
 
   return (
     <div className="contact-links">
-      {availableLinks.map((item, index) => (
+      {availableLinks.map((item) => (
         <div className="contact-link" key={item.label}>
-          <span>{String(index + 1).padStart(2, "0")}</span>
           <div>
             <p>{item.label}</p>
             {item.href ? (

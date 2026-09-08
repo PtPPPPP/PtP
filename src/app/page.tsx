@@ -1,22 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BlogList } from "@/components/blog-list";
-import { Button } from "@/components/button";
 import { ContactLinks } from "@/components/contact-links";
 import { Container } from "@/components/container";
-import { ExperienceTimeline } from "@/components/experience-timeline";
-import { ImmersiveHero } from "@/components/immersive-hero";
+import { HomeIntro } from "@/components/home-intro";
 import { ProjectGrid } from "@/components/project-grid";
 import { SectionHeading } from "@/components/section-heading";
-import { SkillMatrix } from "@/components/skill-matrix";
-import { getPublicExperiences } from "@/data/experience";
 import { profile } from "@/data/profile";
 import {
   getFeaturedProjects,
   projects,
   toProjectListItem,
 } from "@/data/projects";
-import { getAllBlogPosts, toBlogListItem } from "@/lib/content";
+import { getAllBlogPosts } from "@/lib/content";
 import { createPageMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = createPageMetadata({
@@ -26,96 +21,78 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function HomePage() {
   const featuredProjects = getFeaturedProjects().map(toProjectListItem);
-  const latestPosts = getAllBlogPosts().slice(0, 3).map(toBlogListItem);
-  const publicExperiences = getPublicExperiences();
+  const latestPosts = getAllBlogPosts().slice(0, 2);
 
   return (
-    <>
-      <ImmersiveHero />
-
-      <section className="section">
-        <Container>
-          <SectionHeading
-            index="01"
-            eyebrow="Selected work"
-            title="用完整项目，验证一个具体问题。"
-            description="这里优先展示有明确场景、技术边界和个人工作的项目，而不是只列出技术名词。"
-          />
-          <ProjectGrid projects={featuredProjects} variant="featured" />
-          <div className="section-action">
-            <Button href="/projects" variant="secondary">
-              查看全部 {projects.length} 个项目
-              <span aria-hidden="true">→</span>
-            </Button>
-          </div>
-        </Container>
+    <Container className="page-shell home-page">
+      <HomeIntro />
+      <section
+        id="selected-work"
+        className="home-work"
+        aria-labelledby="work-heading"
+      >
+        <div className="home-work__heading">
+          <SectionHeading id="work-heading" title="精选项目" />
+          <span>
+            Selected work / {String(featuredProjects.length).padStart(2, "0")}
+          </span>
+        </div>
+        <ProjectGrid projects={featuredProjects} variant="featured" />
+        <div className="section-action">
+          <Link className="text-link" href="/projects">
+            查看全部 {projects.length} 个项目 <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </section>
-
-      <section className="section">
-        <Container>
-          <SectionHeading
-            index="02"
-            eyebrow="Capabilities"
-            title="从界面到系统，保持可解释的连接。"
-            description="技能不是独立清单，而是完成项目所需的不同层次。以下内容只基于已提供的项目技术与关注方向。"
-          />
-          <SkillMatrix />
-        </Container>
-      </section>
-
-      <section className="section">
-        <Container>
-          <SectionHeading
-            index="03"
-            eyebrow="Experience"
-            title="学习与实践，沿着真实问题展开。"
-            description="这里只公开已经确认的信息，未确认的单位、职位与时间不会生成时间线节点。"
-          />
-          <ExperienceTimeline items={publicExperiences.slice(0, 4)} compact />
+      <div className="home-support">
+        <section className="home-direction" aria-labelledby="direction-heading">
+          <h2 id="direction-heading">学习与方向</h2>
+          <p className="home-direction__statement">{profile.headline}</p>
+          <p>{profile.goal}</p>
           <div className="section-action">
-            <Link className="text-link" href="/experience">
-              查看完整时间线 <span aria-hidden="true">→</span>
+            <Link className="text-link" href="/about">
+              关于我 <span aria-hidden="true">→</span>
             </Link>
-          </div>        </Container>
-      </section>
-
-      <section className="section">
-        <Container>
-          <SectionHeading
-            index="04"
-            eyebrow="Latest notes"
-            title="记录过程，不只陈列结果。"
-            description="正式文章发布后会显示在这里；样例与草稿不会进入生产页面。"
-          />
+            <Link className="text-link" href="/experience">
+              学习与经历 <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </section>
+        <section aria-labelledby="notes-heading">
+          <h2 id="notes-heading">最近记录</h2>
           {latestPosts.length ? (
-            <BlogList posts={latestPosts} />
+            <ul className="home-notes">
+              {latestPosts.map((post) => (
+                <li key={post.slug}>
+                  <div className="home-notes__meta">
+                    <time dateTime={post.date}>{post.date}</time>
+                    {post.sample ? <span>示例文章</span> : null}
+                  </div>
+                  <h3>
+                    <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                  </h3>
+                </li>
+              ))}
+            </ul>
           ) : (
-            <p className="empty-note">正式文章正在整理，当前没有公开内容。</p>
+            <p className="empty-note">暂无公开文章。</p>
           )}
           <div className="section-action">
-            <Button href="/blog" variant="secondary">
-              查看全部文章 <span aria-hidden="true">→</span>
-            </Button>
+            <Link className="text-link" href="/blog">
+              全部记录 <span aria-hidden="true">→</span>
+            </Link>
           </div>
-        </Container>
-      </section>
+        </section>
+      </div>
+      <section className="home-contact" aria-labelledby="contact-heading">
+        <SectionHeading
+          id="contact-heading"
 
-      <section className="section">
-        <Container>
-          <SectionHeading
-            index="05"
-            eyebrow="Contact"
-            title="如果你正在做相近的事，欢迎交流。"
-            description="当前公开入口为 GitHub、手机号与微信；未填写的联系方式不会显示。"
-          />
-          <ContactLinks />
-          <div className="section-action">
-            <Button href="/contact" variant="primary">
-              前往联系页面 <span aria-hidden="true">→</span>
-            </Button>
-          </div>
-        </Container>
+          title="联系我"
+          description="欢迎交流项目、技术与实习机会。"
+        />
+        <ContactLinks />
       </section>
-    </>
+    </Container>
   );
 }

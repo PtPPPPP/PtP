@@ -14,16 +14,11 @@ export default function ContactPage() {
   return (
     <Container className="page-shell contact-page">
       <PageIntro
-        eyebrow="Contact"
-        title="从一个具体问题开始交流。"
-        description="如果你正在做 AI、机器人、自动化或产品工程相关的项目，可以通过下面已公开的入口联系。"
+        title="联系我"
+        englishTitle="Contact"
+        description="欢迎交流人工智能、机器人、自动化相关项目与实习机会。"
       />
-      <div className="contact-page__grid">
-        <div>
-          <h2>公开联系方式</h2>
-          <ContactLinks />
-        </div>
-      </div>
+      <ContactLinks />
     </Container>
   );
 }

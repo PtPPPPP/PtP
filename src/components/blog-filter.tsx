@@ -31,7 +31,7 @@ export function BlogFilter({ posts }: { posts: BlogListItem[] }) {
   return (
     <div>
       <FilterControls
-        className="filter-panel filter-panel--blog"
+        className="filter-panel"
         searchLabel="搜索文章"
         placeholder="标题、摘要或标签"
         query={query}

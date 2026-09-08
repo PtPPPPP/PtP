@@ -15,9 +15,9 @@ export default function ProjectsPage() {
   return (
     <Container className="page-shell">
       <PageIntro
-        eyebrow="Projects"
-        title="作品不是终点，验证才是。"
-        description="按方向、技术或关键词浏览项目。每个项目档案都明确说明当前状态、个人工作与已知限制。"
+        title="项目作品"
+        englishTitle="Projects"
+        description="围绕自动化、智能系统与产品开发的个人项目。"
       />
       <ProjectFilter projects={projects.map(toProjectListItem)} />
     </Container>

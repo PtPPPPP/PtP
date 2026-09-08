@@ -17,20 +17,6 @@ export function BlogCard({ post }: { post: BlogListItem }) {
           </h3>
           <p>{post.description}</p>
         </div>
-        <div className="blog-card__footer">
-          {post.tags.length ? (
-            <div className="tag-row" aria-label="文章标签">
-              {post.tags.map((tag) => (
-                <span className="tech-tag" key={tag}>
-                  {tag}
-                </span>
-              ))}
-            </div>
-          ) : null}
-          <Link className="text-link" href={`/blog/${post.slug}`}>
-            阅读文章 <span aria-hidden="true">→</span>
-          </Link>
-        </div>
       </div>
     </article>
   );
