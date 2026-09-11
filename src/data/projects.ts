@@ -20,6 +20,65 @@ export const projectCategories: Array<"全部" | ProjectCategory> = [
 
 export const projects: Project[] = [
   {
+    slug: "yunxun",
+    title: "云寻智慧农业 AI 工作台",
+    subtitle: "面向农业问答、田间诊断和每日农活安排的本地工作台",
+    description:
+      "面向农业场景的前后端分离工作台，提供农业问答、田间图片初步诊断、每日农活计划和本地会话管理。",
+    category: "AI 与计算机视觉",
+    tags: ["智慧农业", "AI 应用", "计算机视觉"],
+    technologies: ["React", "TypeScript", "Vite", "FastAPI", "Python", "SQLite"],
+    status: "mvp",
+    featured: true,
+    evidenceReady: false,
+    year: "时间待补充",
+    github: "https://github.com/PtPPPPP/yunxun",
+    demo: null,
+    background:
+      "农业生产中的咨询、田间问题初步判断和日常农活安排常常分散在不同沟通工具中。云寻将这些需求收敛到一个可在本地或内网使用的工作台中。",
+    problem:
+      "如何在不依赖公网 SaaS 的前提下，让小团队、合作社或农场能完成农业问答、图片初步诊断和每日农活安排，并保留清晰的数据与安全边界。",
+    features: [
+      "农业场景智能问答",
+      "田间图片初步诊断",
+      "每日农活计划",
+      "注册、登录与访客使用",
+      "会话管理、搜索、置顶与导出",
+      "SQLite 本地数据持久化",
+      "未配置系统模型时可使用本地演示回复",
+    ],
+    architecture: [
+      "React 与 Vite 负责工作台界面和本地交互",
+      "FastAPI 提供认证、会话、消息、诊断和农活计划接口",
+      "SQLite 保存用户、会话、消息和审计数据",
+      "系统模型配置只在服务端环境变量中管理",
+    ],
+    responsibilities: [
+      "农业工作台的产品流程与前后端实现",
+      "认证、会话和消息数据模型设计",
+      "图片初步诊断与农活计划能力接入",
+      "本地/内网部署、备份和发布流程整理",
+    ],
+    highlights: [
+      "把问答、初步诊断和农活安排整合到同一工作流",
+      "用户不能保存个人模型密钥，模型配置统一由服务端管理",
+      "系统模型未配置时仍可通过演示回复验证完整使用流程",
+    ],
+    challenges: [
+      {
+        problem:
+          "本地或内网试用既要保留完整的对话与诊断流程，也要避免把模型密钥和用户数据管理交给浏览器。",
+        solution:
+          "将模型配置、超时和重试统一放在 FastAPI 服务端处理；前端只调用业务接口，用户数据由 SQLite 在本机持久化。",
+      },
+    ],
+    nextSteps: ["补充实际使用截图", "补充项目时间", "验证真实内网试用场景"],
+    limitations: [
+      "当前为 SQLite 单机/内网 MVP，不包含公网 SaaS、多租户、计费或管理员后台",
+      "田间图片诊断结果仅用于初步辅助判断，不替代专业农业技术人员的现场评估",
+    ],
+  },
+  {
     slug: "aiot-greenhouse",
     title: "AIoT 智慧温室种植系统原型",
     subtitle: "从环境数据到设备控制的答辩演示 MVP",
@@ -310,7 +369,7 @@ export const projects: Project[] = [
     evidenceReady: false,
     year: "时间待补充",
     github: "https://github.com/PtPPPPP/snn",
-    demo: null,
+    demo: "https://snnai.cn",
     background:
       "社团需要一个集中说明自身方向、展示项目并连接公众号内容的公开入口。",
     problem:
