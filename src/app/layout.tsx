@@ -3,6 +3,7 @@ import { Geist } from "next/font/google";
 import { Footer } from "@/components/footer";
 import { JsonLd } from "@/components/json-ld";
 import { SiteNav } from "@/components/site-nav";
+import { SiteFrame } from "@/components/site-frame";
 import { profile } from "@/data/profile";
 import { createPageMetadata } from "@/lib/metadata";
 import { siteConfig, absoluteUrl, getSiteUrl } from "@/lib/site";
@@ -66,9 +67,9 @@ export default function RootLayout({
           跳到主要内容
         </a>
         <JsonLd data={structuredData} />
-        <SiteNav />
-        <main id="main-content">{children}</main>
-        <Footer />
+        <SiteFrame navigation={<SiteNav />} footer={<Footer />}>
+          {children}
+        </SiteFrame>
       </body>
     </html>
   );
